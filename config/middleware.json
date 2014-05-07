@@ -1,0 +1,31 @@
+{
+    "middleware": {
+        "errorPages": {
+            "401": "errors/401",
+            "404": "errors/404",
+            "500": "errors/500",
+            "503": "errors/503"
+        },
+          "appsec": {
+            "csrf": false,
+            "csp": false,
+            "p3p": false,
+            "xframe": "SAMEORIGIN"
+          }
+//
+//      "compiler": {
+//          "dust": "templates",
+//          "less": "css"
+//      },
+//
+//      "session": {
+//          "module": "memory",
+//          "secret": "Rawrrrr!"
+//      },
+//
+//      "static": {
+//          "srcRoot": "path:./public",
+//          "rootPath": "path:./.build"
+//      }
+    }
+}
