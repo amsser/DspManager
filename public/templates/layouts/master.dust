@@ -1,21 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title>{+title /}</title>
-    <link rel="stylesheet" href="/css/app.css" />
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Dsp数据管理平台</title>
+    <script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="/javascripts/d3/d3.min.js"></script>
+    <script type="text/javascript" src="..//javascripts/demand_trend.js"></script>
+    <!--
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css" />
+    -->
+    <link rel="stylesheet" type="text/css" href="http://bootswatch.com/cerulean/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap-responsive.min.css" />
 </head>
 <body>
-<div id="wrapper">
 
-    {?user}
-        <li><a href="/logout">Logout ( {user.name} ) </a></li>
-    {:else}
-        <li><a href="/login">Log In</a></li>
-    {/user}
+
+<div class="container">
+
+    <!-- Top Div -->
+    <div class="row">
+
+        <div class="navbar navbar-default">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">DSP数据管理平台</a>
+            </div>
+
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">订单管理</a></li>
+                    <li><a href="#">广告管理</a></li>
+                    <li class="active"><a href="#">数据分析中心</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    {?user}
+                    <li><a href="/logout">Logout ( {user.name} ) </a></li>
+                    {:else}
+                    <li><a href="/login">Log In</a></li>
+                    {/user}
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
 
     {+body /}
+
+
+        </div>
+    </div>
 </div>
-<script data-main="/js/app" src="components/requirejs/require.js"></script>
+
+
 </body>
+<footer>
+</footer>
 </html>

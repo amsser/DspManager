@@ -13,7 +13,7 @@ module.exports = function (app) {
     app.get('/login', function (req, res) {
 
         model.messages = req.session['error'];
-        res.render('login', model);
+        res.render('login', {title : "Dsp数据管理平台"});
         
     });
 
