@@ -11,6 +11,9 @@ var kraken = require('kraken-js'),
 var db = require('./lib/database');
 
 
+require('./lib/db').connect();
+
+
 app.configure = function configure(nconf, next) {
 
     //Configure the database

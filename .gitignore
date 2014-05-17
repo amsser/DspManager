@@ -1,0 +1,7 @@
+#.gitignore
+#.DS_Store
+#.idea
+#node_modules
+#server.log
+#nohup.out
+#.build

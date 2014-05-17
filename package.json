@@ -20,8 +20,11 @@
     "less": "~1.7.0",
     "passport" : "*",
     "connect-flash" : "*",
+    "mongodb" : "*",
     "mongoose" : "*",
     "bcrypt" : "*" ,
-      "passport-local" : "*"
+    "passport-local" : "*",
+    "underscore" : "*",
+    "moment" : "*"
   }
 }
