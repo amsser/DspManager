@@ -30,11 +30,11 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <input size="16" type="text" value="" class="form_datetime">
+                                    <input size="16" type="text" value="" class="form-control form_datetime">
                                 </div>
 
                                 <div class="col-md-2">
-                                    <input size="16" type="text" value="" class="form_datetime">
+                                    <input size="16" type="text" value="" class="form-control form_datetime">
                                 </div>
 
                                 <div class="col-md-2">
