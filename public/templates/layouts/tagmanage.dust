@@ -1,0 +1,7 @@
+{>"layouts/adbase" /}
+
+{<manageform}
+            <div class="row">
+                <h1>tagmanage</h1>
+            </div>
+{/manageform}

@@ -1,0 +1,131 @@
+{>"layouts/adbase" /}
+
+{<manageform}
+            <div class="row">
+            {@contextDump/}
+            {?list}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">活动列表</h3>
+                    </div>
+                    <div class="panel-body">   
+                    <div class="row">
+                        <div class="col-md-2">
+                            <a href="/campin/create"><button type="button" class="btn btn-success btn-md">添加</button></a>
+                        </div>
+                    </div>
+
+                    <table class="table table-striped table-hover ">
+                        <thead id="titlediv">
+                            <tr>
+                            <th>活动</th>
+                            <th>订单数</th>
+                            <th>分配方式</th>
+                            <th>查看报表</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recordsdiv">
+                            {#campins}
+                            <tr>
+                            <td><a href="/campin/get?id={id}">{name}</a></td>
+                            <td>{order_num}</td>
+                            <td>{orderpay_type}</td>
+                            <td><a href="/ad/delete?id={id}"><button type="button" class="btn btn-info btn-xs">查看报表</button></a></td>
+                            <td><a href="/ad/delete?id={id}"><button type="button" class="btn btn-danger btn-xs">删除</button></a></td>
+                            </tr>
+                            {/campins}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            {:else}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">活动管理</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" action="/campin/save" method="post">
+                            <fieldset>
+                                <div class="row" >
+                                    <div class="col-md-4">
+                                    <label class="control-label" for="inputDefault">活动名称</label>
+                                    <input type="text" class="form-control" id="campin_name" name="campin_name" {?campin}value="{campin.name}"{/campin}>
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-md-6">
+                                        <label class="control-label">预算分配方式</label>
+                                        <div class="col-md-3">
+                                        <div class="radio">
+                                            <label>
+                                            <input type="radio" name="campin_ptype" id="optionsRadios1" value="1" {@eq key=campin.orderpay_type value="1"}checked=""{/eq}>
+                                            均分
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                            <input type="radio" name="campin_ptype" id="optionsRadios2" value="2" {@eq key=campin.orderpay_type value=2}checked=""{/eq}>
+                                            订单
+                                            </label>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-md-4 col-sm-offset-1" >
+                                        <div class="row">
+                                        <label for="select" class="control-label">已选订单</label>
+                                        </div>
+                                        <div class="row">
+                                        <select multiple="" name="campin_orders" class="form-control" id="select">
+                                        {?campin}
+                                        {#campin_orders}
+                                        <option value={_id}>{name}</option>
+                                        {/campin_orders}
+                                        {/campin}
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="row">
+                                        <h1></h1>
+                                        </div>
+                                        <div class="row">
+                                        <h1></h1>
+                                        </div>
+                                        <button type="button" class="col-md-10 col-md-offset-1 btn btn-xs"><-添加</button>
+                                        <div class="row">
+                                        <h1></h1>
+                                        </div>
+                                        <button type="button" class="col-md-10 col-md-offset-1 btn btn-xs">移除-></button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                        <label for="select" class="control-label">订单列表</label>
+                                        </div>
+                                        <div class="row">
+                                        <select multiple="" class="form-control">
+                                        {#user_orders}
+                                        <option>{name}</option>
+                                        {/user_orders}
+                                        </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h1></h1>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-md-9">
+                                    </div>
+                                    <div class="col-md-2">
+                                    <button type="submit" class="btn btn-primary btn-right">保存</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            {/list}
+            </div>
+{/manageform}

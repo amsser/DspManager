@@ -1,0 +1,43 @@
+{>"layouts/master" /}
+
+{<body}
+    
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked" style="max-width: 150px;">
+                {@select key="page"}
+                <li {@eq value="campin"}class="active"{/eq}><a href="/campin">活动管理</a></li>
+                <li {@eq value="order"}class="active"{/eq}><a href="/order">订单管理</a></li>
+                <li {@eq value="ad"}class="active"{/eq}><a href="/ad">广告管理</a></li>
+                {/select}
+                <div class="panel panel-default">
+                    <div class="panel-heading">京东商城</div>
+                    <div class="panel-body">
+                        今日花费：{todaypay}
+                        账户余额：{balance}
+                    </div>
+                </div>
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{user}的广告计划</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            {#campins}
+                            <li class="list-group-item">
+                                <a href="#">{name}</a>
+                            </li>
+                            {/campins}
+                        </ul>
+                    </div>
+                </div>
+            </ul>
+        </div>
+
+        <div class="col-md-10">
+
+            {+manageform /}
+
+        </div>
+    </div>
+{/body}
