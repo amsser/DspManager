@@ -25,6 +25,8 @@
     "bcrypt" : "*" ,
     "passport-local" : "*",
     "underscore" : "*",
-    "moment" : "*"
+    "moment" : "*",
+    "images" : "*",
+    "accounting" : "*"
   }
 }

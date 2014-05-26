@@ -1,0 +1,57 @@
+{>"layouts/master" /}
+
+{<body}
+    <div class="row">
+    <div class="col-md-2">
+        <div class="panel panel-default">
+          <div class="panel-heading">账户信息</div>
+          <div class="panel-body">
+            <p>账户余额 : <h3>12785</h3></p>
+          </div>
+        </div>
+    </div>
+    <div class="col-md-10">
+
+        <div class="row">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">素材管理</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-hover ">
+                        <thead id="titlediv">
+                        <tr>
+                            <th>素材名称</th>
+                            <th>素材类型</th>
+                            <th>素材尺寸</th>
+                            <th>是否通过审核</th>
+                            <th><a href="/material/create"><button type="button" class="btn btn-success btn-md">添加素材</button></a></th>
+                        </tr>
+                        </thead>
+                        <tbody id="recordsdiv">
+
+                        {#data}
+
+	                        <tr>
+	                        	<!--
+	                        	<td><a href="/materials/{file_name}"><img src="/materials/{file_name}" alt="..." class="img-circle"></a></td>
+	                        	-->
+
+	                            {?m_name}<td ><a href="/materials/{file_name}">{m_name}</a></td>{/m_name}
+	                            {?m_type}<td>{m_type}</td>{/m_type}
+	                            <td>宽:{m_width}px 高:{m_high}px</td>
+	                            {?dsp_validated}<td>{dsp_validated}</td>{/dsp_validated}
+	                            <td><a href="/material/remove?id={_id}"><button type="button" class="btn btn-danger btn-xs">删除素材</button></a></td>
+	                        </tr>
+
+                        {/data}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+{/body}

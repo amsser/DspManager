@@ -4,32 +4,13 @@ var db = require('../lib/db').db;
 
 var uc = require('underscore');
 
+var accounting = require('accounting');
+
 module.exports = function (app) {
 
     app.get('/report', function (req, res) {
 
-        var groupby = { ActivityName: "$ActivityName", OrderName: "$OrderName"};
-
-
-        db().collection('reportday').aggregate([
-            {$group: {_id: groupby, Display: {$sum: "$Display"}, Click: {$sum: "$Click"}, ClickRatio: {$sum: "$ClickRatio"}, Arrive: {$sum: "$Arrive"},ArriveRatio: {$sum: "$ArriveRatio"}, Trans: {$sum: "$Trans"}}}
-        ], function (err, result) {
-
-            for (var i = 0; i < result.length; i++) {
-
-                result[i] = uc.extend(result[i], result[i]["_id"]);
-
-                console.log(result[i]);
-
-            }
-
-
-            console.log(result);
-
-            res.render('report', {data: result});
-
-        });
-
+        res.render('report',{curl : res.locals.active});
 
     });
 
@@ -38,8 +19,6 @@ module.exports = function (app) {
 
 
         var groupby = {};
-
-        console.log(req.query.order);
 
         if(req.query.activity){
              groupby['ActivityName'] = "$ActivityName";
@@ -65,30 +44,20 @@ module.exports = function (app) {
             {$group: {_id: groupby, Display: {$sum: "$Display"}, Click: {$sum: "$Click"}, ClickRatio: {$sum: "$ClickRatio"}, Arrive: {$sum: "$Arrive"},ArriveRatio: {$sum: "$ArriveRatio"}, Trans: {$sum: "$Trans"}}}
         ], function (err, result) {
 
-            for (var i = 0; i < result.length; i++) {
+            uc.each(result, function(item) {
 
-                result[i] = uc.extend(result[i], result[i]["_id"]);
+                uc.extend(item, item["_id"])
 
-                //console.log(result[i]);
+                item.ClickRatio = parseFloat(accounting.toFixed((item.Click / item.Display) * 10000, 2));
+                item.ArriveRatio = parseFloat(accounting.toFixed((item.Arrive / item.Display) * 10000, 2));
+                item.TransRatio = parseFloat(accounting.toFixed((item.Trans / item.Display) * 10000, 2));
 
-            }
-
-
-            //console.log(result);
+            });
 
             res.send({data: result});
 
-            //res.render('report', {data: result});
-
         });
 
-//        db().collection('reportday').find({},{_id : -1 , "ActivityName":1}).toArray(function (err, docs) {
-//
-//            console.log(docs);
-//
-//            res.render('report', {data : docs});
-//
-//        });
 
     });
 

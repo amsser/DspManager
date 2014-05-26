@@ -9,3 +9,64 @@
 {"ActivityName" : "活动2","OrderName" : "订单1","ExchangeName" : "Exchange1","MediaName" : "媒体1","ADPosition" : "广告位1","Date" : "2014-05-02","Display" :   10000,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
 {"ActivityName" : "活动3","OrderName" : "订单1","ExchangeName" : "Exchange1","MediaName" : "媒体2","ADPosition" : "广告位3","Date" : "2014-05-02","Display" :   10000,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
 {"ActivityName" : "活动2","OrderName" : "订单1","ExchangeName" : "Exchange1","MediaName" : "媒体1","ADPosition" : "广告位1","Date" : "2014-05-02","Display" :   10000,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+
+
+{"domain":"58.com","display":5238507,"click":7657,"ctr":0.00146,"reach":7547,"reach_rate":0.985,"action":98,"action_rate":0.013,"cpc":1.24,"cpm":1.81,"cpa":96.70,"cost":9494.68,"cost_rate":0.432}
+{"domain":"pcpop.com","display":4735546,"click":5952,"ctr":0.00125,"reach":5812,"reach_rate":0.976,"action":41,"action_rate":0.007,"cpc":1.04,"cpm":1.31,"cpa":10.94,"cost":6190.08,"cost_rate":0.282}
+{"domain":"ttkvod.com","display":467248,"click":995,"ctr":0.00213,"reach":987,"reach_rate":0.991,"action":8,"action_rate":0.008,"cpc":1.05,"cpm":2.23,"cpa":130.59,"cost":1044.75,"cost_rate":0.047}
+{"domain":"baofeng.com","display":504284,"click":5572,"ctr":0.01105,"reach":5568,"reach_rate":0.999,"action":83,"action_rate":0.015,"cpc":0.47,"cpm":5.23,"cpa":31.77,"cost":2637.41,"cost_rate":0.12}
+{"domain":"xinjunshi.com","display":172439,"click":160,"ctr":0.00093,"reach":155,"reach_rate":0.968,"action":1,"action_rate":0.0064,"cpc":12.08,"cpm":1.23,"cpa":1934.1,"cost":1934.1,"cost_rate":0.088}
+{"domain":"yesky.com","display":695234,"click":563,"ctr":0.00081,"reach":530,"reach_rate":0.941,"action":0,"action_rate":0,"cpc":1.21,"cpm":0.98,"cpa":0,"cost":681.33,"cost_rate":0.031}
+
+
+{"Hour" : "00","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "01","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "02","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "03","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "04","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "05","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "06","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "07","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "08","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "09","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "10","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "11","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "12","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "13","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "14","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "15","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "16","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "17","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "18","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "19","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "20","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "21","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "22","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+{"Hour" : "23","Date" : "2014-05-02","Display" :   523850,"Click" :   8,"ClickRatio" : 0,"Arrive" :  6,"ArriveRatio" : 0,"Trans" :   2}
+
+
+
+{"Hour" : "00","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "01","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "02","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "03","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "04","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "05","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "06","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "07","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "08","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "09","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "10","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "11","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "12","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "13","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "14","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "15","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "16","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "17","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "18","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "19","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "20","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "21","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "22","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}
+{"Hour" : "23","Date" : "2014-05-25","Display" :   46724,"Click" :   10,"ClickRatio" : 0,"Arrive" :  8,"ArriveRatio" : 0,"Trans" :   3}

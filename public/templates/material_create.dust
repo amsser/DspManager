@@ -1,0 +1,90 @@
+{>"layouts/master" /}
+
+{<body}
+    <div class="row">
+    <div class="col-md-2">
+        <div class="panel panel-default">
+          <div class="panel-heading">账户信息</div>
+          <div class="panel-body">
+            <p>账户余额 : <h3>12785</h3></p>
+          </div>
+        </div>
+    </div>
+    <div class="col-md-10">
+
+        <div class="row">
+
+            <div class="panel panel-primary">
+                <div class="panel-body">
+
+						<form class="form-horizontal" method="post" enctype="multipart/form-data" action="/material/save">
+						  <fieldset>
+						    <legend>上传素材</legend>
+						    <div class="form-group">
+						      <label class="col-lg-2 control-label" for="inputDefault">素材名称</label>
+						      <div class="col-lg-8">
+						        <input type="text" class="form-control" name="m_name" id="inputDefault">
+						      </div>
+						    </div>
+
+
+						    <div class="form-group">
+						      <label class="col-lg-2 control-label">请选择素材类型</label>
+						      <div class="col-lg-10">
+						        <div class="radio">
+						          <label>
+						            <input type="radio" name="m_type" id="optionsRadios1" value="pic" checked="">
+						            图片素材
+						          </label>
+						        </div>
+						        <div class="radio">
+						          <label>
+						            <input type="radio" name="m_type" id="optionsRadios2" value="flash">
+						            Flash素材
+						          </label>
+						        </div>
+						      </div>
+						    </div>
+						    <div class="form-group">
+						      <label for="select" class="col-lg-2 control-label">素材尺寸</label>
+						      <label for="select" class="col-lg-1 control-label">宽 ： </label>
+						      <div class="col-lg-2">
+						      	<input type="text" class="form-control input-sm" name="m_width" id="inputDefault">
+						      </div>
+						      <label for="select" class="col-lg-1 control-label">高 ： </label>
+						      <div class="col-lg-2">
+						      	<input type="text" class="form-control input-sm" name="m_high" id="inputDefault">
+						      </div>
+						    </div>
+
+						   	<div class="form-group">
+						      <label for="select" class="col-lg-2 control-label">选择文件</label>
+						      <div class="col-lg-8">
+						        <input type="file" name="m_file">
+						      </div>
+						    </div>
+						    
+						    <div class="form-group">
+						      <div class="col-lg-6 col-lg-offset-6">
+						        <button type="submit" class="btn btn-primary">保存</button>
+						      </div>
+						    </div>
+						  </fieldset>
+						</form>
+
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+        <script>
+
+        </script>
+
+
+
+{/body}

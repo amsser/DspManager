@@ -12,7 +12,7 @@ module.exports = function (app) {
     app.get('/', function (req, res) {
         
         //res.render('index', model);
-        res.redirect('/report');
+        res.redirect('/login');
         
     });
 

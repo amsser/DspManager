@@ -6,6 +6,7 @@ var kraken = require('kraken-js'),
     auth = require('./lib/auth'),
     User = require('./models/user'),
     flash = require('connect-flash'),
+    express = require('express'),
     app = {};
 
 var db = require('./lib/database');
@@ -59,20 +60,37 @@ app.configure = function configure(nconf, next) {
 
 app.requestStart = function requestStart(server) {
     // Run before most express middleware has been registered.
+
+    server.use(express.bodyParser());
+
+    server.use(function(req, res, next){
+
+      res.locals.active = req.path.split('/')[1] ;
+
+      //console.log(res.locals.active);
+
+      next();
+
+    });
+
 };
 
 
 app.requestBeforeRoute = function requestBeforeRoute(server) {
     // Run before any routes have been added.
+
     server.use(passport.initialize());  //Use Passport for authentication
     server.use(passport.session());     //Persist the user in the session
     server.use(flash());                //Use flash for saving/retrieving error messages for the user
     server.use(auth.injectUser);        //Inject the authenticated user into the response context
+
+
 };
 
 
 app.requestAfterRoute = function requestAfterRoute(server) {
     // Run after all routes have been added.
+
 };
 
 

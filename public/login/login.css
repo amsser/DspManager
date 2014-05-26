@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+body {
+    background: url("../images/loginbg.png");
+}
+
+#login-header {
+    margin:155px 0 0;
+    padding:0 55px;
+}
+#logo {
+    float:none;
+    background:url("../images/logo_login.png");
+    height:90px;
+    width:357px;
+    position:static;
+    padding:0;
+}
+
+#wrapper-login {
+    margin:0 0 10px 0;
+}
+#login-main {
+    background:url("../images/loginbox_bg.png") repeat-x top center;
+    height:334px;
+}
+
+#login-showcase-wrapper {
+    float:left;
+    width:49%;
+}
+#login-form-wrapper {
+    float:left;
+    width:50%;
+}
+
+#login-showcase {
+    width:400px;
+    height:250px;
+    padding:30px 0 30px 80px;
+}
+
+#login-form {
+    width:400px;
+    padding:40px 0 0 80px;
+    background:url("../images/login1_2.png") no-repeat 0 center;
+}
+label {
+    padding:2px 0;
+    display:inline-block;
+    color:#077BD9;
+}
+label.login {
+    width:60px;
+}

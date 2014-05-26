@@ -2,12 +2,17 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Dsp数据管理平台</title>
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <title>DSP管理平台</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/login/favicon.ico" />
+
     <script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/icheck.min.js"></script>
     <script type="text/javascript" src="/css/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
 
+    <script type="text/javascript" src="/components/Highcharts-3.0.10/js/highcharts.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/login/layouts.css" media="all" />
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/iCheck/skins/flat/blue.css" />
     <link rel="stylesheet" type="text/css" href="/css/datepicker.css" />
@@ -15,49 +20,64 @@
 </head>
 <body>
 
+    <div class="container">
 
-<div class="container">
+        <!-- Top Div -->
+        <div class="row">
 
-    <!-- Top Div -->
-    <div class="row">
+            <div class="navbar navbar-default">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">DSP管理平台</a>
+                </div>
 
-        <div class="navbar navbar-default">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">DSP数据管理平台</a>
+                <div class="navbar-collapse collapse navbar-responsive-collapse">
+                    <ul class="nav navbar-nav">
+                        {@eq key=active value="#"} <li class="active" > {:else} <li> {/eq}
+                            <a href="#">广告管理</a>
+                        </li>
+                        {@eq key=active value="material"} <li class="active" > {:else} <li> {/eq}
+                            <a href="/material">素材管理</a>
+                        </li>
+                        {@eq key=active value="dashboard"} <li class="active" > {:else} <li> {/eq}
+                            <a href="/dashboard">数据分析中心</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {?user}
+                        <li>
+                            <a href="/logout">Logout ( {user.name} )</a>
+                        </li>
+                        {:else}
+                        <li>
+                            <a href="#">你好！ 演示账户</a>
+                        </li>
+                        {/user}
+                    </ul>
+                </div>
             </div>
 
-            <div class="navbar-collapse collapse navbar-responsive-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="#">订单管理</a></li>
-                    <li><a href="#">广告管理</a></li>
-                    <li class="active"><a href="#">数据分析中心</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-
-                    {?user}
-                    <li><a href="/logout">Logout ( {user.name} ) </a></li>
-                    {:else}
-                    <li><a href="/login">Log In</a></li>
-                    {/user}
-
-                </ul>
-            </div>
         </div>
-
-    </div>
-
-    {+body /}
-
-
-        </div>
+        {+body /}
     </div>
 </div>
+</div>
 
+   <!-- Footer -->
+    <!-- Page footer -->
+    <div id="footer" class="c">
+        <p>
+            Copyright &copy; 2013-2014 <b><a href="#" title="Sohu CS Tech Team">海福云聚</a>
+                .</b> 
+            All rights reserved.
+        </p>
+    </div>
+    <!-- End of Page footer -->
+    <!-- Footer end -->
 
 </body>
 </html>

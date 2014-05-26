@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>DSP管理平台</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/login/favicon.ico" />
+    
+    <script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/icheck.min.js"></script>
+    <script type="text/javascript" src="/css/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript" src="/components/Highcharts-3.0.10/js/highcharts.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/login/layouts.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/iCheck/skins/flat/blue.css" />
+    <link rel="stylesheet" type="text/css" href="/css/datepicker.css" />
+
+</head>
+<body>
+
+
+<div class="container">
+
+    {+body /}
+
+
+        </div>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <!-- Page footer -->
+    <div id="footer" class="c">
+        <p>
+            Copyright &copy; 2013-2014 <b><a href="#" title="Sohu CS Tech Team">海福云聚</a>
+                .</b> 
+            All rights reserved.
+        </p>
+    </div>
+    <!-- End of Page footer -->
+    <!-- Footer end -->
+
+
+</body>
+</html>

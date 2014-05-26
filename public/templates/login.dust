@@ -1,41 +1,92 @@
-{>"layouts/master" /}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>登录 -</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
 
-{<body}
+    <link rel="stylesheet" type="text/css" href="/login/layouts.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/login/form.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/login/login.css" media="all">
+    <!-- Colour Schemes Default colour scheme is blue. -->
+    <link id="sitetheme" rel="stylesheet" type="text/css" href="/login/blue.css" media="all" />
 
-    <div>
-        <form id="loginForm" method="post">
-                <fieldset>
-                    <h2>Login</h2>
-                    {?messages}
-                        <ul>
-                            {#messages}
-                                <li>{.}</li>
-                            {/messages}
+    <link rel="stylesheet" type="text/css" href="/login/jquery-ui.custom.css" />
+</head>
 
-                        </ul>
-                    {/messages}
-                    <table>
-                        <tr>
-                            <td><label for="username">Login: </label></td>
-                            <td><input id="username" name="username" type="text"/></td>
-                        </tr>
-                        <tr>
-                            <td><label for="password">Password: </label></td>
-                            <td><input id="password" name="password" type="password"/></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="submit" value="Login"/>
-                                <!--
-                                <input type="hidden" name="_csrf" value="{_csrf}"/>
-                                -->
-                            </td>
-                            <td></td>
-                        </tr>
-                    </table>
+<body>
+    <!-- Header -->
+    <div id="login-header">
+        <div id="logo"></div>
+    </div>
+    <!-- Header end -->
 
-                </fieldset>
-            </form>
+    <div id="wrapper-login">
+        <div id="login-main">
+
+            <div id="login-showcase-wrapper">
+                <div id="login-showcase">
+                    <div class="showcase">
+                        <img src="/login/case1.png" alt="Data Center"/>
+                    </div>
+                </div>
+            </div>
+
+            <div id="login-form-wrapper">
+                <div id="login-form">
+
+                    <form class="activeform" id="LoginForm" action="/dashboard" method="post">
+                        <div class="row">
+                            <label class="login required" for="mda04in_username">
+                                用户名
+                                <span class="required">*</span>
+                            </label>
+                            <input value="" name="mda04in[username]" id="mda04in_username" type="text" />
+                            <div class="error-message" id="mda04in_username_em_" style="display:none"></div>
+                        </div>
+
+                        <div class="row">
+                            <label class="login required" for="mda04in_password">
+                                密码
+                                <span class="required">*</span>
+                            </label>
+                            <input name="mda04in[password]" id="mda04in_password" type="password" />
+                            <div class="error-message" id="mda04in_password_em_" style="display:none"></div>
+                        </div>
+
+                        <div class="row remember">
+                            <input id="ptmda04in_remember" type="hidden" value="0" name="mda04in[remember]" />
+                            <input name="mda04in[remember]" id="mda04in_remember" value="1" type="checkbox" />
+                            <label for="mda04in_remember">记住我</label>
+                            <div class="error-message" id="mda04in_remember_em_" style="display:none"></div>
+                        </div>
+
+                        <div class="row submit">
+
+                            <a ><input class="btn btn-blue big" type="submit" name="pt0" value="登录" /></a>
+                            <a id="resetpasswd" href="/site/resetpasswd">忘记密码</a>
+                            |
+                            <a href="#">需要帮助</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
         </div>
+    </div>
 
-{/body}
+    <!-- Footer -->
+    <!-- Page footer -->
+    <div id="footer" class="c">
+        <p>
+            Copyright &copy; 2013-2014 <b><a href="#" title="Sohu CS Tech Team">海福云聚</a>
+                .</b> 
+            All rights reserved.
+        </p>
+    </div>
+    <!-- End of Page footer -->
+    <!-- Footer end -->
+
+</body>
+</html>
