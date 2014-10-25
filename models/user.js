@@ -35,6 +35,8 @@ var userModel = function () {
             return;
         }
 
+        //console.log(user.isModified('password'));
+
         //Encrypt it using bCrypt. Using the Sync method instead of Async to keep the code simple.
         var hashedPwd = bcrypt.hashSync(user.password, DIFFICULTY);
 
@@ -52,6 +54,11 @@ var userModel = function () {
      */
     userSchema.methods.passwordMatches = function (plainText) {
         var user = this;
+
+        //console.log(plainText);
+        //console.log(user.password);
+
+        //return plainText==user.password;
         return bcrypt.compareSync(plainText, user.password);
     };
 

@@ -1,0 +1,182 @@
+{>"layouts/master" /}
+
+{<body}
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked" style="max-width: 150px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">京东商城</div>
+                    <div class="panel-body">
+                        今日花费：{todaypay}
+                        账户余额：{balance}
+                    </div>
+                </div>
+            </ul>
+        </div>
+
+        <div class="col-md-10">
+
+        <div class="list-group">
+            <p class="list-group-item-text">
+            <form class="form-horizontal" method="post" action="/adxtest">
+                <fieldset>
+                    <span class="help-block">广告请求的唯一标识</span>
+                    <div class="form-group">
+                      <div class="col-md-4 col-sm-offset-1">
+                        <label for="textArea" class="control-label">id</label>
+                        <input type="text" class="form-control" id="adreqid" name="adreqid">
+                      </div>
+                    </div>
+                    <span class="help-block">网站信息</span>
+                    <div class="form-group">
+                        <div class="col-md-4 col-sm-offset-1">
+                          <label for="select" class="control-label">网站域名</label>
+                          <select class="form-control" id="domain" name="domain">
+                            <option value="http://a.com">a.com</option>
+                            <option value="http://b.com">b.com</option>
+                            <option value="http://c.com">c.com</option>
+                            <option value="http://d.com">d.com</option>
+                            <option value="http://e.com">e.com</option>
+                            <option value="http://f.com">f.com</option>
+                            <option value="http://g.com">g.com</option>
+                            <option value="http://h.com">h.com</option>
+                            <option value="http://i.com">i.com</option>
+                            <option value="http://j.com">j.com</option>
+                          </select>
+                        </div>
+                    </div>
+                    <span class="help-block">浏览器类型</span>
+                      <div class="form-group">
+                          <div class="col-md-10 col-sm-offset-1">
+                          <label for="select" class="control-label">User Agent</label>
+                          <select class="form-control" id="ua" name="ua">
+                            <option value="1Mozilla/5.0 (Windows NT 5.2) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30">Mozilla/5.0 (Windows NT 5.2) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30</option>
+                            <option value="Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0">Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0</option>
+                            <option value="1Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.2; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET4.0E; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C)">Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.2; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET4.0E; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C)</option>
+                            <option value="Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.2; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET4.0E; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C)">Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.2; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET4.0E; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C)</option>
+                            <option value="Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.2; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET4.0E; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C)">Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.2; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET4.0E; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C)</option>
+                            <option value="Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E)">Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E)</option>
+                            <option value="Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022; .NET4.0E; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C)">Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022; .NET4.0E; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C)</option>
+                          </select>
+                        </div>
+                      </div>
+
+                    <span class="help-block">用户信息</span>
+                    <div class="form-group">
+                        <div class="col-md-4 col-sm-offset-1">
+                          <label for="select" class="control-label">User Id</label>
+                          <select class="form-control" id="userid" name="userid">
+                            <option value="user001">user001</option>
+                            <option value="user002">user002</option>
+                            <option value="user003">user003</option>
+                            <option value="user004">user004</option>
+                            <option value="user005">user005</option>
+                            <option value="user006">user006</option>
+                            <option value="user007">user007</option>
+                            <option value="user008">user008</option>
+                            <option value="user009">user009</option>
+                            <option value="user010">user010</option>
+                            <option value="user011">user011</option>
+                            <option value="user012">user012</option>
+                            <option value="user013">user013</option>
+                            <option value="user014">user014</option>
+                            <option value="user015">user015</option>
+                            <option value="user016">user016</option>
+                            <option value="user017">user017</option>
+                            <option value="user018">user018</option>
+                            <option value="user019">user019</option>
+                            <option value="user020">user020</option>
+                          </select>
+                        </div>
+                        <div class="col-md-4 col-sm-offset-1">
+                          <label for="select" class="control-label">地域信息</label>
+                          <select class="form-control" id="ip" name="ip">
+                            <option value="122.102.0.0">北京</option>
+                            <option value="123.56.128.0">上海</option>
+                            <option value="202.38.171.0">广州</option>
+                          </select>
+                        </div>
+                    </div>
+                    <span class="help-block">广告展示信息</span>
+                    <div class="form-group">
+                        <div class="col-md-4 col-sm-offset-1">
+                          <label for="select" class="control-label">广告位高*宽</label>
+                          <select class="form-control" id="size" name="size">
+                            <option value="728*90">728*90</option>
+                            <option value="160*600">160*600</option>
+                            <option value="250*250">250*250</option>
+                            <option value="200*200">200*200</option>
+                            <option value="300*250">300*250</option>
+                            <option value="960*60">960*60</option>
+                            <option value="468*60">468*60</option>
+                          </select>
+                        </div>
+                        <div class="col-md-4 ">
+                          <label for="select" class="control-label">广告位位置</label>
+                          <select class="form-control" id="pos" name="pos">
+                            <option value="0">未知</option>
+                            <option value="1">首屏</option>
+                            <option value="2">非首屏</option>
+                          </select>
+                        </div>
+<!--                         <div class="col-md-4 col-sm-offset-1">
+                          <label class="control-label">广告位底价</label>
+                          <div class="input-group">
+                          <span class="input-group-addon">元</span>
+                          <input type="text" class="form-control" name="bidfloor" id="bidfloor">
+                          <span class="input-group-btn">
+                          </span>
+                          </div>
+                        </div> -->
+                        <div class="col-md-4 col-sm-offset-1">
+                          <label for="select" class="control-label">广告位ID</label>
+                          <select class="form-control" id="tagid" name="tagid">
+                            <option value="A001">A001</option>
+                            <option value="A002">A002</option>
+                            <option value="A003">A003</option>
+                            <option value="A004">A004</option>
+                            <option value="A005">A005</option>
+                            <option value="A006">A006</option>
+                            <option value="A007">A007</option>
+                            <option value="A008">A008</option>
+                            <option value="A009">A009</option>
+                            <option value="A010">A010</option>
+                            <option value="B001">B001</option>
+                            <option value="B002">B002</option>
+                            <option value="B003">B003</option>
+                            <option value="B004">B004</option>
+                            <option value="B005">B005</option>
+                            <option value="B006">B006</option>
+                            <option value="B007">B007</option>
+                            <option value="B008">B008</option>
+                            <option value="B009">B009</option>
+                            <option value="B010">B010</option>
+                          </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2 col-md-offset-10">
+                        <button type="submit" class="btn btn-primary">测试</button>
+                        </div>
+                    </div>
+                    </div>
+                </fieldset>
+            </form>
+            {?json_code}
+            <span class="help-block">发送请求</span>
+            <div class="well">
+              {json_code}
+            </div>
+            {/json_code}
+            {?response_body}
+            <span class="help-block">返回结果</span>
+            <div class="well">
+              {response_body}
+            </div>
+            {/response_body}
+            </p>
+        </div>
+
+        </div>
+    </div>
+{/body}

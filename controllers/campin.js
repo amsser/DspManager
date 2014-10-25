@@ -3,110 +3,137 @@
 
 var CampinModel = require('../models/campin');
 var OrderModel = require('../models/order');
+var auth = require('../lib/auth');
+var ObjectID = require('mongodb').ObjectID;
+var db = require('../lib/db').db;
 
 
 
-module.exports = function (app) {
+module.exports = function(app) {
 
-    app.get('/campin', function (req, res) {
+    function loadUser(req, res, next) {
+
+        console.log(req.path.split('/')[1]);
+        req.user2 = "xxx";
+
+        next();
+    }
+
+
+    app.all('/campin', auth.isAuthenticated(), loadUser ,function(req, res) {
+
+        console.log("/campain");
+        console.log(req.user2);
+        req.campin = "xx---";
 
         res.redirect("/campin/list");
 
     });
-        
-    app.get('/campin/list', function (req, res) {
+
+    app.all('/campin/list', auth.isAuthenticated(), function(req, res) {
+
         var result = {};
 
+        console.log(req.user._id);
+
+        result["page"] = "campin";
         result["todaypay"] = 0;
         result["balance"] = 400;
-        result["user"] = "演示账户";
-        CampinModel.where("id").gt(0).exec(function(err, dbcampins) {
+        //
+
+        CampinModel.find({uid:req.user._id}, function(err, dbcampins) {
             result["campins"] = dbcampins;
+            result["list"] = true;
+
+            res.render('campin', result);
         });
 
-        // result["campins"] = [{"name": "店庆", "id" : 1,"order_num":3, "action":"均分"},
-        //                 {"name": "新年", "id" : 2,"order_num":1, "action":"按活动"}];
-        console.log(result["campins"]);
-        result["list"] = true;
-
-        res.render('campin', result);
-        
     });
 
-    app.all('/campin/get', function (req, res) {
+    app.all('/campin/get', auth.isAuthenticated(), function(req, res) {
         var result = {};
         var id = req.param('id');
 
+        result["page"] = "campin";
         result["todaypay"] = 0;
         result["balance"] = 400;
-        result["user"] = "演示账户";
-        CampinModel.where("id").gt(0).exec(function(err, dbcampins) {
-            result["campins"] = dbcampins;
-        });
-
-        CampinModel.findById(id, function(err, campin) {
-            if(err) console.log(err);
-            result["campin"] = campin;
-            OrderModel.find({"campin_id":campin.id}, function(err, orders){
-                result["campin_orders"] = orders;
-            });
-        });
-        OrderModel.where("id").gt(0).exec(function(err, userorders) {
-            result["user_orders"] = userorders;
-        });
-        // result["campins"] = [{"name": "店庆", "id" : 1},
-        //                 {"name": "新年", "id" : 2}];
-
-        res.render('campin', result);
         
+        CampinModel.find({uid:req.user._id}, function(err, dbcampins) {
+            result["campins"] = dbcampins;
+
+            CampinModel.findById(id, function(err, campin) {
+                if (err) console.log(err);
+                result["campin"] = campin;
+
+                OrderModel.find({
+                    uid:req.user._id
+                }, function(err, userorders) {
+                    result["user_orders"] = userorders;
+                    res.render('campin', result);
+                });
+
+            });
+
+        });
+
+
+
     });
 
-    app.all('/campin/create', function (req, res) {
+    app.all('/campin/create', auth.isAuthenticated(), function(req, res) {
         var result = {};
 
+        result["page"] = "campin";
         result["todaypay"] = 0;
         result["balance"] = 400;
-        result["user"] = "演示账户";
-        CampinModel.where("id").gt(0).exec(function(err, dbcampins) {
-            result["campins"] = dbcampins;
-        });
-        // result["campins"] = [{"name": "店庆", "id" : 1},
-        //                 {"name": "新年", "id" : 2}];
-
-        res.render('campin', result);
         
+        
+        CampinModel.find({uid:req.user._id}, function(err, dbcampins) {
+            result["campins"] = dbcampins;
+            res.render('campin', result);
+        });
+
     });
 
-    app.all('/campin/save', function (req, res) {
+    app.all('/campin/save', auth.isAuthenticated(), function(req, res) {
 
-        console.log(req.body);
         var cam = {};
         cam["name"] = req.body.campin_name;
-        cam["orderpay_type"] = req.body.campin_ptype;
-        if(req.body.campin_orders) { 
-            cam["orders"] = req.body.campin_orders;
-            cam["order_num"] = req.body.campin_orders.length;
-   
+        cam["_id"] = req.body.campin_id;
+
+        if (cam._id && cam._id != '') {
+
+            cam._id = new ObjectID(cam._id);
+
         } else {
-            cam["order_num"] = 0; 
+            delete cam._id;
         }
 
-        var camentry = new CampinModel(cam);
-        camentry.save();
+        cam.uid = req.user._id;
 
-        res.redirect("/campin/list");
+        db().collection('campins').save(cam, function(err, result) {
+
+            console.log(result);
+
+            res.redirect("/campin/list");
+
+        });
+
     });
 
-    app.all('/campin/delete', function (req, res) {
+    app.all('/campin/delete', auth.isAuthenticated(), function(req, res) {
 
         var id = req.param('id');
 
-        CampinModel.remove({ size: 'large' }, function (err) {
-            if(err) console.log(err);
-          // removed!
+        CampinModel.remove({
+            _id: id
+        }, function(err) {
+            if (err) console.log(err);
+            // removed!
+            res.redirect("/campin/list");
         });
 
-        res.redirect("/campin/list");
+
     });
 
 };

@@ -5,25 +5,28 @@ var db = require('../lib/db').db;
 var uc = require('underscore');
 
 var accounting = require('accounting');
+var auth = require('../lib/auth');
 
 
 module.exports = function(app) {
 
 
-    app.get('/report_order_adpos_day', function(req, res) {
+    app.get('/report_order_adpos_day', auth.isAuthenticated(), function(req, res) {
 
-         db().collection('reportday').distinct('OrderName',function(err, orders) {
+        db().collection('reportday').distinct('OrderName', function(err, orders) {
 
             var reo = [];
 
-            for(var k in orders){
-               reo.push({value : orders[k] }) ;
+            for (var k in orders) {
+                reo.push({
+                    value: orders[k]
+                });
             }
 
             console.log(reo);
 
             res.render('report_order_adpos_day', {
-                    orders : reo
+                orders: reo
             });
 
 
@@ -31,10 +34,10 @@ module.exports = function(app) {
 
     });
 
-    app.get('/report_order_adpos_day/datestat', function(req, res) {
+    app.get('/report_order_adpos_day/datestat', auth.isAuthenticated(), function(req, res) {
 
-        var cd = '2014-05-25';
-        var hd = '2014-05-02';
+        var cd = '2014-05-01';
+        var hd = '2014-05-07';
 
         var order = req.param('order');
 
@@ -43,14 +46,24 @@ module.exports = function(app) {
 
         console.log(order);
 
-        if(order != '所有订单'){
-            cond1.push({ $match : { OrderName : order } });
-            cond2.push({ $match : { OrderName : order } });
+        if (order != '所有订单') {
+            cond1.push({
+                $match: {
+                    OrderName: order
+                }
+            });
+            cond2.push({
+                $match: {
+                    OrderName: order
+                }
+            });
         }
 
         cond1.push({
             $group: {
-                _id: {"Date":"$Date"},
+                _id: {
+                    "Date": "$Date"
+                },
                 Display: {
                     $sum: "$Display"
                 },
@@ -70,25 +83,29 @@ module.exports = function(app) {
         });
 
         cond2.push({
-                $group: {
-                    _id: {"ADPosition":"$ADPosition"},
-                    Display: {
-                        $sum: "$Display"
-                    },
-                    Click: {
-                        $sum: "$Click"
-                    },
-                    Arrive: {
-                        $sum: "$Arrive"
-                    },
-                    Trans: {
-                        $sum: "$Trans"
-                    },
-                    Cost: {
-                        $sum: "$Cost"
-                    }
+            $group: {
+                _id: {
+                    "ADPosition": "$ADPosition"
+                },
+                Display: {
+                    $sum: "$Display"
+                },
+                Click: {
+                    $sum: "$Click"
+                },
+                Arrive: {
+                    $sum: "$Arrive"
+                },
+                Trans: {
+                    $sum: "$Trans"
+                },
+                Cost: {
+                    $sum: "$Cost"
                 }
-            });
+            }
+        });
+
+        console.log(cond1);
 
         db().collection('reportday').aggregate(cond1, function(err, result) {
 
@@ -99,11 +116,16 @@ module.exports = function(app) {
                 uc.extend(item, item["_id"])
 
                 item.ClickRatio = parseFloat(accounting.toFixed((item.Click / item.Display) * 10000, 2));
-                item.ArriveRatio = parseFloat(accounting.toFixed((item.Arrive / item.Display) * 10000, 2));
-                item.TransRatio = parseFloat(accounting.toFixed((item.Trans / item.Display) * 10000, 2));
+                item.ArriveRatio = parseFloat(accounting.toFixed((item.Arrive / item.Click), 2));
+                item.TransRatio = parseFloat(accounting.toFixed((item.Trans / item.Click), 2));
+                item.CPC = parseFloat(accounting.toFixed((item.Cost / item.Click), 2));
+                item.CPM = parseFloat(accounting.toFixed((item.Cost / (item.Display / 1000)), 2));
+                item.CPA = parseFloat(accounting.toFixed((item.Cost / item.Trans), 2));
+                item.Cost = parseFloat(accounting.toFixed(item.Cost, 2));
 
             });
 
+            result = uc.sortBy(result,'Date');
 
             var chartData = {
                 Date: uc(result).pluck('Date'),
@@ -113,7 +135,11 @@ module.exports = function(app) {
                 Trans: uc(result).pluck('Trans'),
                 ClickRatio: uc(result).pluck('ClickRatio'),
                 ArriveRatio: uc(result).pluck('ArriveRatio'),
-                TransRatio: uc(result).pluck('TransRatio')
+                TransRatio: uc(result).pluck('TransRatio'),
+                CPC: uc(result).pluck('CPC'),
+                CPM: uc(result).pluck('CPM'),
+                CPA: uc(result).pluck('CPA'),
+                Cost: uc(result).pluck('Cost')
             };
 
             db().collection('reportday').aggregate(cond2, function(err, result) {
@@ -125,16 +151,23 @@ module.exports = function(app) {
                     uc.extend(item, item["_id"])
 
                     item.ClickRatio = parseFloat(accounting.toFixed((item.Click / item.Display) * 10000, 2));
-                    item.ArriveRatio = parseFloat(accounting.toFixed((item.Arrive / item.Display) * 10000, 2));
-                    item.TransRatio = parseFloat(accounting.toFixed((item.Trans / item.Display) * 10000, 2));
+                    item.ArriveRatio = parseFloat(accounting.toFixed((item.Arrive / item.Click), 2));
+                    item.TransRatio = parseFloat(accounting.toFixed((item.Trans / item.Click), 2));
+                    item.CPC = parseFloat(accounting.toFixed((item.Cost / item.Click), 2));
+                    item.CPM = parseFloat(accounting.toFixed((item.Cost / (item.Display / 1000)), 2));
+                    item.CPA = parseFloat(accounting.toFixed((item.Cost / item.Trans), 2));
+                    item.Cost = parseFloat(accounting.toFixed(item.Cost, 2));
 
                 });
 
-                res.send({chartData : chartData,table : result});
+                res.send({
+                    chartData: chartData,
+                    table: result
+                });
 
 
             });
- 
+
 
         });
 

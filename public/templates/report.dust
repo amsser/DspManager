@@ -23,11 +23,11 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <input size="16" type="text" value="" class="form-control form_datetime">
+                                    <input size="16" type="text" value="2014-05-01" class="form-control form_datetime">
                                 </div>
 
                                 <div class="col-md-2">
-                                    <input size="16" type="text" value="" class="form-control form_datetime">
+                                    <input size="16" type="text" value="2014-05-07" class="form-control form_datetime">
                                 </div>
 
 
@@ -124,25 +124,6 @@
                         </tr>
                         </thead>
                         <tbody id="recordsdiv">
-
-                        {#data}
-
-                        <tr>
-                            {?ActivityName}<td >{ActivityName}</td>{/ActivityName}
-                            {?OrderName}<td>{OrderName}</td>{/OrderName}
-                            {?ExchangeName}<td>{ExchangeName}</td>{/ExchangeName}
-                            {?MediaName}<td>{MediaName}</td>{/MediaName}
-                            {?ADPosition}<td>{ADPosition}</td>{/ADPosition}
-                            {?Date}<td>{Date}</td>{/Date}
-                            {?Display}<td class="success">{Display}</td>{/Display}
-                            {?Click}<td>{Click}</td>{/Click}
-                            {?ClickRatio}<td class="danger">{ClickRatio}</td>{/ClickRatio}
-                            {?Arrive}<td>{Arrive}</td>{/Arrive}
-                            {?ArriveRatio}<td class="warning">{ArriveRatio}</td>{/ArriveRatio}
-                            {?Trans}<td>{Trans}</td>{/Trans}
-                        </tr>
-
-                        {/data}
 
                         </tbody>
                     </table>
@@ -265,13 +246,13 @@
 
                 tdHtml = tdHtml + appendTD('TransRatio' , record,'');
 
-                tdHtml = tdHtml + appendTD('TransRatio' , record,'');
+                tdHtml = tdHtml + appendTD('CPC' , record,'');
 
-                tdHtml = tdHtml + appendTD('TransRatio' , record,'');
+                tdHtml = tdHtml + appendTD('CPM' , record,'');
 
-                tdHtml = tdHtml + appendTD('TransRatio' , record,'');
+                tdHtml = tdHtml + appendTD('CPA' , record,'');
 
-                tdHtml = tdHtml + appendTD('TransRatio' , record,'');
+                tdHtml = tdHtml + appendTD('Cost' , record,'');
 
                 tdHtml = tdHtml + "</tr>";
 
@@ -318,13 +299,13 @@
 
                 tdHtml = tdHtml + appendTH('TransRatio' ,"转化率", record);
 
-                tdHtml = tdHtml + appendTH('TransRatio' ,"CPC", record);
+                tdHtml = tdHtml + appendTH('CPC' ,"CPC", record);
 
-                tdHtml = tdHtml + appendTH('TransRatio' ,"CPM", record);
+                tdHtml = tdHtml + appendTH('CPM' ,"CPM", record);
 
-                tdHtml = tdHtml + appendTH('TransRatio' ,"CPA", record);
+                tdHtml = tdHtml + appendTH('CPA' ,"CPA", record);
 
-                tdHtml = tdHtml + appendTH('TransRatio' ,"花费", record);
+                tdHtml = tdHtml + appendTH('Cost' ,"花费", record);
 
                 tdHtml = tdHtml + "</tr>";
 

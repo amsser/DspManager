@@ -1,0 +1,108 @@
+{>"layouts/master" /}
+
+{<body}
+    <img src="http://112.126.66.58/tracker/t.gif?a=XfPVEODYYsR1PBs506Sxg0&e=" style="display:none;"/>
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked" style="max-width: 150px;">
+                {@select key="page"}
+                <li {@eq key=page value="site"}class="active"{/eq}><a href="/code/site">全站用户</a></li>
+                <!--li {@eq key=page value="cate"}class="active"{/eq}><a href="/code/cate">分类用户</a></li-->
+                <li {@eq key=page value="trans"}class="active"{/eq}><a href="/code/trans">转化监测</a></li>
+                {/select}
+                <div class="panel panel-default">
+                    <div class="panel-heading">京东商城</div>
+                    <div class="panel-body">
+                        今日花费：{todaypay}
+                        账户余额：{balance}
+                    </div>
+                </div>
+            </ul>
+        </div>
+
+        <div class="col-md-10">
+
+		<div class="list-group">
+			<h5 class="list-group-item-heading">如何安装代码？</h5>
+			<p class="list-group-item-text">
+			<form class="form-horizontal" method="post" action="/code/confirm">
+  				<fieldset>
+  					<span class="help-block">1.复制选框中js代码</span>
+				    <div class="form-group">
+				      <label for="textArea" class="col-md-2 control-label">代码</label>
+				      <div class="col-md-10">
+                        {@eq key=page value="site"}
+                        <textarea class="form-control" rows="3" id="textArea">
+                            <script type="text/javascript">
+                            var _py = _py || [];
+                            _py.push(['a', 'XfPVEODYYsR1PBs506Sxg0']);
+                            _py.push(['domain','http://112.126.66.58']);
+                            _py.push(['e','']);
+                            -function(d) {
+                                var s = d.createElement('script'),
+                                e = d.body.getElementsByTagName('script')[0]; 
+                                e.parentNode.insertBefore(s, e),
+                                s.src = 'http://112.126.66.58/tracker/adv.js';
+                            }(document);
+                            </script>
+                            <img src="http://112.126.66.58/tracker/t.gif?a=XfPVEODYYsR1PBs506Sxg0&e=" style="display:none;"/>
+                        </textarea>
+				        {/eq}
+                        {@eq key=page value="trans"}
+                        <textarea class="form-control" rows="3" id="textArea">
+                            <script type="text/javascript">
+                            var _py = _py || [];
+                            _py.push(['t', 'KSDFIs792SJIRNJfIS98']);
+                            _py.push(['domain','http://112.126.66.58']);
+                            _py.push(['e','']);
+                            -function(d) {
+                                var s = d.createElement('script'),
+                                e = d.body.getElementsByTagName('script')[0]; 
+                                e.parentNode.insertBefore(s, e),
+                                s.src = 'http://112.126.66.58/tracker/adv.js';
+                            }(document);
+                            </script>
+                            <img src="http://112.126.66.58/tracker/t.gif?t=KSDFIs792SJIRNJfIS98" style="display:none;"/>
+                        </textarea>
+                        {/eq}
+				      </div>
+				    </div>
+                    <span class="help-block">2.安装
+                        将复制的全站访客找回代码，粘贴到适当的网页中body标签结束之前；
+                        若携带扩展参数信息，请将代码中红色字体替换为实际参数值或留空。
+                    </span>
+                    <span class="help-block">3.验证
+                        请输入您已安装代码页面的URL进行验证：
+                    </span>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="inputDefault">输入url</label>
+                        <div class="col-md-10">
+                        <input type="text" class="form-control" id="inputDefault">
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <div class="col-md-2 col-md-offset-10">
+                        <button type="submit" class="btn btn-primary">验证</button>
+                        </div>
+                    </div>
+                    {?confirm_success}
+                    <div class="alert alert-dismissable alert-success">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>验证成功!</strong>
+                    </div>
+                    {/confirm_success}
+                    {?confirm_fail}
+                    <div class="alert alert-dismissable alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>验证失败!</strong>
+                    </div>
+                    {/confirm_fail}
+				</fieldset>
+			</form>
+			</p>
+		</div>
+
+        </div>
+    </div>
+    <img src="http://112.126.66.58/tracker/t.gif?a=XfPVEODYYsR1PBs506Sxg0&e=" style="display:none;"/>
+{/body}

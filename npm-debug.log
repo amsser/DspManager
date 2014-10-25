@@ -1,0 +1,205 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@2.1.2
+3 info using node@v0.10.32
+4 warn package.json helloworld@0.1.0 No repository field.
+5 verbose install where, deps [ '/Users/bill/Sites/DspManager',
+5 verbose install   [ 'kraken-js',
+5 verbose install     'express',
+5 verbose install     'nconf',
+5 verbose install     'dustjs-helpers',
+5 verbose install     'dustjs-linkedin',
+5 verbose install     'requirejs',
+5 verbose install     'adaro',
+5 verbose install     'makara',
+5 verbose install     'less',
+5 verbose install     'passport',
+5 verbose install     'connect-flash',
+5 verbose install     'mongodb',
+5 verbose install     'mongoose',
+5 verbose install     'bcrypt',
+5 verbose install     'passport-local',
+5 verbose install     'underscore',
+5 verbose install     'moment',
+5 verbose install     'images',
+5 verbose install     'accounting',
+5 verbose install     'recluster',
+5 verbose install     'request',
+5 verbose install     'line-reader',
+5 verbose install     'redis',
+5 verbose install     'q',
+5 verbose install     'async',
+5 verbose install     'kafka-node' ] ]
+6 info preinstall helloworld@0.1.0
+7 verbose already installed skipping adaro@~0.1.5 /Users/bill/Sites/DspManager
+8 verbose already installed skipping makara@~0.3.4 /Users/bill/Sites/DspManager
+9 verbose already installed skipping less@~1.7.0 /Users/bill/Sites/DspManager
+10 verbose already installed skipping passport@* /Users/bill/Sites/DspManager
+11 verbose already installed skipping connect-flash@* /Users/bill/Sites/DspManager
+12 verbose already installed skipping mongodb@* /Users/bill/Sites/DspManager
+13 verbose already installed skipping mongoose@* /Users/bill/Sites/DspManager
+14 verbose already installed skipping bcrypt@* /Users/bill/Sites/DspManager
+15 verbose already installed skipping passport-local@* /Users/bill/Sites/DspManager
+16 verbose already installed skipping underscore@* /Users/bill/Sites/DspManager
+17 verbose already installed skipping moment@* /Users/bill/Sites/DspManager
+18 verbose already installed skipping images@* /Users/bill/Sites/DspManager
+19 verbose already installed skipping accounting@* /Users/bill/Sites/DspManager
+20 verbose already installed skipping recluster@* /Users/bill/Sites/DspManager
+21 verbose already installed skipping request@* /Users/bill/Sites/DspManager
+22 verbose already installed skipping line-reader@* /Users/bill/Sites/DspManager
+23 verbose already installed skipping redis@* /Users/bill/Sites/DspManager
+24 verbose already installed skipping q@* /Users/bill/Sites/DspManager
+25 verbose already installed skipping async@* /Users/bill/Sites/DspManager
+26 silly cache add args [ 'kafka-node@*', null ]
+27 verbose cache add spec kafka-node@*
+28 silly cache add parsed spec { raw: 'kafka-node@*',
+28 silly cache add   scope: null,
+28 silly cache add   name: 'kafka-node',
+28 silly cache add   rawSpec: '*',
+28 silly cache add   spec: '*',
+28 silly cache add   type: 'range' }
+29 verbose already installed skipping kraken-js@* /Users/bill/Sites/DspManager
+30 silly addNonLocal parsed spec { raw: 'kafka-node@*',
+30 silly addNonLocal   scope: null,
+30 silly addNonLocal   name: 'kafka-node',
+30 silly addNonLocal   rawSpec: '*',
+30 silly addNonLocal   spec: '*',
+30 silly addNonLocal   type: 'range' }
+31 verbose addNamed kafka-node@*
+32 silly addNamed semver.valid null
+33 silly addNamed semver.validRange *
+34 silly addNameRange { name: 'kafka-node', range: '*', hasData: false }
+35 verbose mapToRegistry name kafka-node
+36 verbose mapToRegistry uri https://registry.npmjs.org/kafka-node
+37 verbose request on initialization, where is /kafka-node
+38 verbose request after pass 1, where is /kafka-node
+39 verbose request url raw /kafka-node
+40 verbose request resolving registry [ 'https://registry.npmjs.org/', './kafka-node' ]
+41 verbose request after pass 2, where is https://registry.npmjs.org/kafka-node
+42 verbose request no auth needed
+43 info attempt registry request try #1 at 22:49:12
+44 verbose request id c5ea04d718c97232
+45 http request GET https://registry.npmjs.org/kafka-node
+46 verbose already installed skipping express@* /Users/bill/Sites/DspManager
+47 verbose already installed skipping nconf@^0.6.8 /Users/bill/Sites/DspManager
+48 verbose already installed skipping dustjs-helpers@~1.2.0 /Users/bill/Sites/DspManager
+49 verbose already installed skipping dustjs-linkedin@~2.3.4 /Users/bill/Sites/DspManager
+50 verbose already installed skipping requirejs@~2.1.11 /Users/bill/Sites/DspManager
+51 http 200 https://registry.npmjs.org/kafka-node
+52 silly registry.get cb [ 200,
+52 silly registry.get   { date: 'Wed, 08 Oct 2014 14:49:13 GMT',
+52 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+52 silly registry.get     etag: '"CRH1G3HPPKFCA9ZFVWLF26EHR"',
+52 silly registry.get     'content-type': 'application/json',
+52 silly registry.get     'cache-control': 'max-age=60',
+52 silly registry.get     'content-length': '46543',
+52 silly registry.get     'accept-ranges': 'bytes',
+52 silly registry.get     via: '1.1 varnish',
+52 silly registry.get     age: '0',
+52 silly registry.get     'x-served-by': 'cache-ty66-TYO',
+52 silly registry.get     'x-cache': 'MISS',
+52 silly registry.get     'x-cache-hits': '0',
+52 silly registry.get     'x-timer': 'S1412779753.229618,VS0,VE651',
+52 silly registry.get     vary: 'Accept',
+52 silly registry.get     'keep-alive': 'timeout=10, max=50',
+52 silly registry.get     connection: 'Keep-Alive' } ]
+53 silly addNameRange number 2 { name: 'kafka-node', range: '*', hasData: true }
+54 silly addNameRange versions [ 'kafka-node',
+54 silly addNameRange   [ '0.0.1',
+54 silly addNameRange     '0.0.2',
+54 silly addNameRange     '0.0.3',
+54 silly addNameRange     '0.0.4',
+54 silly addNameRange     '0.0.5',
+54 silly addNameRange     '0.0.6',
+54 silly addNameRange     '0.0.7',
+54 silly addNameRange     '0.0.8',
+54 silly addNameRange     '0.0.9',
+54 silly addNameRange     '0.1.0',
+54 silly addNameRange     '0.1.1',
+54 silly addNameRange     '0.1.2',
+54 silly addNameRange     '0.1.3',
+54 silly addNameRange     '0.1.4',
+54 silly addNameRange     '0.1.5',
+54 silly addNameRange     '0.1.6',
+54 silly addNameRange     '0.1.7',
+54 silly addNameRange     '0.1.8',
+54 silly addNameRange     '0.1.9',
+54 silly addNameRange     '0.2.0',
+54 silly addNameRange     '0.2.1',
+54 silly addNameRange     '0.2.2',
+54 silly addNameRange     '0.2.3',
+54 silly addNameRange     '0.2.4',
+54 silly addNameRange     '0.2.5',
+54 silly addNameRange     '0.2.6',
+54 silly addNameRange     '0.2.7',
+54 silly addNameRange     '0.2.8',
+54 silly addNameRange     '0.2.9',
+54 silly addNameRange     '0.2.10' ] ]
+55 verbose addNamed kafka-node@0.2.10
+56 silly addNamed semver.valid 0.2.10
+57 silly addNamed semver.validRange 0.2.10
+58 verbose addRemoteTarball [ 'https://registry.npmjs.org/kafka-node/-/kafka-node-0.2.10.tgz',
+58 verbose addRemoteTarball   '516f3ce583be4ff99b1f60bdd2a38cde0f142cfb' ]
+59 info retry fetch attempt 1 at 22:49:14
+60 info attempt registry request try #1 at 22:49:14
+61 http fetch GET https://registry.npmjs.org/kafka-node/-/kafka-node-0.2.10.tgz
+62 http fetch 200 https://registry.npmjs.org/kafka-node/-/kafka-node-0.2.10.tgz
+63 silly fetchAndShaCheck shasum 516f3ce583be4ff99b1f60bdd2a38cde0f142cfb
+64 verbose addTmpTarball already have metadata; skipping unpack
+65 silly install resolved [ { name: 'kafka-node',
+65 silly install resolved     description: 'node client for Apache kafka, only support kafka 0.8 and above',
+65 silly install resolved     version: '0.2.10',
+65 silly install resolved     main: 'kafka.js',
+65 silly install resolved     dependencies:
+65 silly install resolved      { buffermaker: '1.2.0',
+65 silly install resolved        binary: '~0.3.0',
+65 silly install resolved        'buffer-crc32': '~0.2.1',
+65 silly install resolved        'node-zookeeper-client': '0.2.0',
+65 silly install resolved        async: '0.7.0',
+65 silly install resolved        'node-uuid': '1.4.1',
+65 silly install resolved        lodash: '~2.2.1' },
+65 silly install resolved     devDependencies:
+65 silly install resolved      { mocha: '^1.18.2',
+65 silly install resolved        should: '~1.2.2',
+65 silly install resolved        'line-by-line': '~0.1.1',
+65 silly install resolved        optimist: '~0.6.0' },
+65 silly install resolved     repository: { type: 'git', url: 'git@github.com:SOHU-Co/kafka-node.git' },
+65 silly install resolved     scripts: { test: 'make test' },
+65 silly install resolved     bugs: { url: 'https://github.com/SOHU-Co/kafka-node/issues' },
+65 silly install resolved     homepage: 'https://github.com/SOHU-Co/kafka-node',
+65 silly install resolved     _id: 'kafka-node@0.2.10',
+65 silly install resolved     dist:
+65 silly install resolved      { shasum: '516f3ce583be4ff99b1f60bdd2a38cde0f142cfb',
+65 silly install resolved        tarball: 'http://registry.npmjs.org/kafka-node/-/kafka-node-0.2.10.tgz' },
+65 silly install resolved     _from: 'kafka-node@*',
+65 silly install resolved     _npmVersion: '1.3.24',
+65 silly install resolved     _npmUser: { name: 'haio', email: 'mockingror@gmail.com' },
+65 silly install resolved     maintainers: [ [Object] ],
+65 silly install resolved     directories: {},
+65 silly install resolved     _shasum: '516f3ce583be4ff99b1f60bdd2a38cde0f142cfb',
+65 silly install resolved     _resolved: 'https://registry.npmjs.org/kafka-node/-/kafka-node-0.2.10.tgz' } ]
+66 info install kafka-node@0.2.10 into /Users/bill/Sites/DspManager
+67 info installOne kafka-node@0.2.10
+68 verbose locking kafka-node with /Users/bill/.npm/_locks/kafka-node-09e1e47f81eb73b4.lock
+69 warn locking Error: EACCES, open '/Users/bill/.npm/_locks/kafka-node-09e1e47f81eb73b4.lock'
+69 warn locking  failed { [Error: EACCES, open '/Users/bill/.npm/_locks/kafka-node-09e1e47f81eb73b4.lock']
+69 warn locking   errno: 3,
+69 warn locking   code: 'EACCES',
+69 warn locking   path: '/Users/bill/.npm/_locks/kafka-node-09e1e47f81eb73b4.lock' }
+70 verbose stack Error: Attempt to unlock kafka-node, which hasn't been locked
+70 verbose stack     at unlock (/usr/local/lib/node_modules/npm/lib/utils/locker.js:54:11)
+70 verbose stack     at cb (/usr/local/lib/node_modules/npm/lib/install.js:908:5)
+70 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:912:20
+70 verbose stack     at /usr/local/lib/node_modules/npm/lib/utils/locker.js:36:9
+70 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/lockfile/lockfile.js:149:38)
+70 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/lockfile/lockfile.js:177:38
+70 verbose stack     at Object.oncomplete (fs.js:107:15)
+71 verbose cwd /Users/bill/Sites/DspManager
+72 error Darwin 14.0.0
+73 error argv "node" "/usr/local/bin/npm" "install"
+74 error node v0.10.32
+75 error npm  v2.1.2
+76 error Attempt to unlock kafka-node, which hasn't been locked
+77 error If you need help, you may report this error at:
+77 error     <http://github.com/npm/npm/issues>
+78 verbose exit [ 1, true ]

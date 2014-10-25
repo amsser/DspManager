@@ -36,19 +36,19 @@ app.configure = function configure(nconf, next) {
 
     //Add two users to the system.
     var u1 = new User({
-        name: 'Kraken McSquid',
+        name: 'advertiser',
         login: 'admin',
-        password: 'admin',
+        password: 'adm1n',
         role: 'admin'
     });
 
+    //Add two users to the system.
     var u2 = new User({
-        name: 'Ash Williams',
-        login: 'user',
-        password: 'user',
-        role: 'user'
+        name: 'advertiser',
+        login: 'dsp2admin',
+        password: 'adm2n',
+        role: 'groupadmin'
     });
-
     //Ignore errors. In this case, the errors will be for duplicate keys as we run this app more than once.
     u1.save();
     u2.save();

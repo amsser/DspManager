@@ -5,18 +5,22 @@
         "dbname": "dspm",
         "prefix": null,
         "password": "passw0rd",
-        "host": "182.92.3.24",
+        //"host": "124.232.133.207",
+        //"host": "182.92.3.24",
+        "host": "124.232.133.207",
         "port": 27017
     },
 
     "bcrypt": {
         "difficulty": 8
-    }
+    },
 
 
 // "host": "localhost",
-//
-// "port": 8000,
+
+"port": 10080
+//"port": 80
+
 //
 // "i18n": {
 //     "fallback": "en-US",

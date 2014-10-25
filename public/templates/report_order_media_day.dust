@@ -17,7 +17,7 @@
             </div>
 
             <div class="col-md-2">
-                <input size="16" type="text" value="2014-05-02" class="form-control form_datetime  input-sm">
+                <input size="16" type="text" value="2014-05-01" class="form-control form_datetime  input-sm">
             </div>
 
             <div class="col-md-1 col-lg-offset-0">
@@ -25,7 +25,7 @@
             </div>
 
             <div class="col-md-2">
-                <input size="16" type="text" value="2014-05-02" class="form-control form_datetime  input-sm">
+                <input size="16" type="text" value="2014-05-07" class="form-control form_datetime  input-sm">
             </div>
 
             <div class="col-md-2">
@@ -81,31 +81,6 @@
                             </tr>
                         </thead>
                         <tbody id="recordsdiv">
-                            {#table}
-                            <tr>
-                                
-                                <td class="text-center">{MediaName}</td>
-                                
-                                <td class="text-center">{Display}</td>
-                                
-                                <td class="text-center">{Click}</td>
-                                
-                                <td class="text-center">{ClickRatio}</td>       
-
-                                <td class="text-center">{Trans}</td>
-                                
-                                <td class="text-center">{TransRatio}</td>
-
-                                <td class="text-center">{TransRatio}</td>
-
-                                <td class="text-center">{TransRatio}</td>
-
-                                <td class="text-center">{TransRatio}</td>
-
-                                <td class="text-center">{TransRatio}</td>
-                                
-                            </tr>
-                            {/table}
                         </tbody>
                     </table>
                 </div>
@@ -134,11 +109,11 @@
                         text: ' '
                     },
                     xAxis: {
-                        categories: ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11','12', '13', '14', '15', '16', '17', '18', '19', '20', '21','22','23']
+                        categories: []
                     },
                     yAxis: {
                         title: {
-                            text: '展示数'
+                            text: ' '
                         }
                     },
                     legend : {
@@ -223,15 +198,16 @@
 
                         var c = $('#container').highcharts();
 
+                        c.xAxis[0].setCategories(result.chartData.Date);
                         c.series[0].setData(result.chartData.Display);
                         c.series[1].setData(result.chartData.Click);
                         c.series[2].setData(result.chartData.ClickRatio);
                         c.series[3].setData(result.chartData.Trans);
                         c.series[4].setData(result.chartData.TransRatio);
-                        c.series[5].setData(result.chartData.TransRatio);
-                        c.series[6].setData(result.chartData.TransRatio);
-                        c.series[7].setData(result.chartData.TransRatio);
-                        c.series[8].setData(result.chartData.TransRatio);
+                        c.series[5].setData(result.chartData.CPC);
+                        c.series[6].setData(result.chartData.CPM);
+                        c.series[7].setData(result.chartData.CPA);
+                        c.series[8].setData(result.chartData.Cost);
 
 
                         var tableData = result.table;
@@ -272,13 +248,13 @@
 
                 tdHtml = tdHtml + appendTD('TransRatio' , record);
 
-                tdHtml = tdHtml + appendTD('TransRatio' , record);
+                tdHtml = tdHtml + appendTD('CPC' , record);
 
-                tdHtml = tdHtml + appendTD('TransRatio' , record);
+                tdHtml = tdHtml + appendTD('CPM' , record);
 
-                tdHtml = tdHtml + appendTD('TransRatio' , record);
+                tdHtml = tdHtml + appendTD('CPA' , record);
 
-                tdHtml = tdHtml + appendTD('TransRatio' , record);
+                tdHtml = tdHtml + appendTD('Cost' , record);
 
                 tdHtml = tdHtml + "</tr>";
 

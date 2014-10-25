@@ -2,6 +2,7 @@
 
 var db = require('../lib/db').db;
 var accounting = require('accounting');
+var auth = require('../lib/auth');
 
 
 module.exports = function(app) {
@@ -44,7 +45,7 @@ module.exports = function(app) {
 
 		//parseFloat(accounting.toFixed((item.Click / item.Display) * 10000, 2))
 
-		for (var j = 20; j < 30; j++) {
+		for (var j = 1; j < 8; j++) {
 
 			for (var i = 0; i < 24; i++) {
 
@@ -52,7 +53,7 @@ module.exports = function(app) {
 
 				var doc = {
 					"Hour": i < 10 ? "0" + i : "" + i,
-					"Date": "2014-05-" + j,
+					"Date": "2014-05-0" + j,
 					"Display": parseInt(gr(hd[0], 0)),
 					"Click": parseInt(gr(hd[1], 0)),
 					"ClickRatio": parseFloat(gr(0.00146 * 10000, 2)),
@@ -76,6 +77,8 @@ module.exports = function(app) {
 		db().collection('dashboard').remove({}, function(err, result) {
 
 			console.log('Remove All');
+
+			console.log(docs);
 
 			db().collection('dashboard').insert(docs, function(err, result) {
 				console.log('Import Finished');

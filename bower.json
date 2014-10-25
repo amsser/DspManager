@@ -1,0 +1,31 @@
+{
+  "name": "DspManager",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/amsser/DspManager",
+  "authors": [
+    "amsserli@sohu-inc.com <amsserli@sohu-inc.com>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap": "~0.11.0",
+    "bootstrap": "~3.2.0",
+    "dustjs-linkedin-helpers": "^1.1.1",
+    "dustjs-linkedin": "^2.0.3",
+    "jquery-ui-bootstrap": "~0.2.5",
+    "react": "~0.11.2",
+    "requirejs": "^2.1.11",
+    "underscore": "~1.7.0"
+  }
+}

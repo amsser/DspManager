@@ -5,22 +5,23 @@ var db = require('../lib/db').db;
 var ObjectID = require('mongodb').ObjectID;
 var moment = require('moment');
 var path = require('path');
+var auth = require('../lib/auth');
 //var images = require("images");
 
 
 module.exports = function(app) {
 
-	app.get('/material', function(req, res) {
+	app.get('/material', auth.isAuthenticated(), function(req, res) {
 
 		res.redirect("/material/list");
 
 	});
 
 
-	app.get('/material/list', function(req, res) {
+	app.get('/material/list', auth.isAuthenticated(), function(req, res) {
 
 
-		db().collection('material').find({rm : {$ne : true}}).sort({savetime : -1}).toArray(function(err, result) {
+		db().collection('material').find({uid:req.user._id,rm : {$ne : true}}).sort({savetime : -1}).toArray(function(err, result) {
 
 			console.log(result);
 
@@ -32,13 +33,13 @@ module.exports = function(app) {
 
 	});
 
-	app.all('/material/create', function(req, res) {
+	app.all('/material/create', auth.isAuthenticated(), function(req, res) {
 
 		res.render('material_create');
 
 	});
 
-	app.all('/material/save', function(req, res) {
+	app.all('/material/save', auth.isAuthenticated(), function(req, res) {
 
 		var material = req.body;
 
@@ -58,6 +59,8 @@ module.exports = function(app) {
 		material.dsp_validated = '未审核';
 		material.exchange_validated = [];
 		material.savetime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+		material.uid = req.user._id;
 		
 
 		// 移动文件
@@ -82,7 +85,7 @@ module.exports = function(app) {
 
 	});
 
-	app.all('/material/remove', function(req, res) {
+	app.all('/material/remove', auth.isAuthenticated(), function(req, res) {
 
 		var id = req.param('id');
 
@@ -99,7 +102,7 @@ module.exports = function(app) {
 	});
 
 
-	app.all('/material/update', function(req, res) {
+	app.all('/material/update', auth.isAuthenticated(), function(req, res) {
 
 		var id = req.param('id');
 

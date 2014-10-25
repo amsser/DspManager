@@ -1,7 +1,7 @@
 {>"layouts/adbase" /}
 
 {<manageform}
-            <div class="row">
+            <div ng-app class="row">
                 {?list}
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -9,51 +9,63 @@
                     </div>
                     <div class="panel-body">   
                     <div class="row">
+                        <!--
+                        <form class="form-horizontal" method="post" action="/order/find">
+                        <fieldset>
                         <div class="col-md-2">
                             <h4><span class="control-label">订单查询 : </span></h4>
                         </div>
 
-
                         <div class="col-md-2">
-                            <input size="16" type="text" value="" class="form-control form_datetime">
+                            <input size="16" type="text" name="order_name" value="" class="form-control form_datetime">
                         </div>
 
-                        <div class="col-md-2">
-                            <input size="16" type="text" value="" class="form-control form_datetime">
-                        </div>
 
                         <div class="col-md-2">
-                            <a href="/order/find"><button type="button" class="btn btn-primary btn-md">查询</button></a>
+                            <button type="submit" class="btn btn-primary btn-md">查询</button>
                         </div>
+                        
+                         </fieldset>
+                        
+                        </form>
+                        -->
+                       
 
                         <div class="col-md-2">
-                            <a href="/order/create"><button type="button" class="btn btn-success btn-md">添加</button></a>
+                            <a href="/order/create?c_id={campaign._id}"><button type="button" class="btn btn-success btn-md">添加</button></a>
                         </div>
                     </div>
 
                     <table class="table table-striped table-hover ">
                         <thead id="titlediv">
                             <tr>
-                            <th>订单ID</th>
+                            <th>订单名称</th>
+                            <th>状态</th>
                             <th>所属活动</th>
-                            <th>所属广告主</th>
                             <th>订单预算</th>
-                            <th>投放时间</th>
+                            <th>频控时间</th>
                             <th>投放时段</th>
-                            <th>投放状态</th>
+                            <th></th>
                             </tr>
                         </thead>
                         <tbody id="recordsdiv">
                             {#orders}
                             <tr>
-                            <td><a href="/order/get?id={id}">订单{id}</a></td>
-                            <td>{campin}</td>
-                            <td>{owner}</td>
-                            <td>{money}</td>
-                            <td>{time}</td>
-                            <td>{last}</td>
-                            <td><a href="/order/statchange?id={id}"><button type="button" class="btn btn-danger btn-xs">{status}</button></a></td>
-                            <td><a href="/order/delete?id={id}"><button type="button" class="btn btn-danger btn-xs">删除</button></a></td>
+                            <td><a href="/ad/list?o_id={_id}">{Order_name}</a></td>
+                            <td> {@eq key=Active value="1"}正常{:else}停止{/eq}</td>
+                            <td>{Campin_name}</td>
+                            <td>{Count_cost}</td>
+                            <td>{Freq_timeout}</td>
+                            <td>{L_time}</td>
+                            <!--
+                            <td>
+                                <button type="button" class="btn btn-danger btn-xs">停止</button>
+                            </td>
+                            -->
+                            <td>
+                                <a href="/order/get?id={_id}"><button type="button" class="btn btn-success btn-xs">编辑</button></a>
+                                <a href="/order/delete?id={_id}&c_id={Campin_id}"><button type="button" class="btn btn-danger btn-xs">删除</button></a>
+                            </td>
                             </tr>
                             {/orders}
                         </tbody>
@@ -61,472 +73,928 @@
                     </div>
                 </div>
                 {:else}
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">基本信息配置</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form class="form-horizontal">
-                            <fieldset>
-                                    <div class="row">
-                                    <div class="col-md-6 col-sm-offset-1">
-                                        <label for="select" class="control-label">所属活动</label>
-                                        <select class="form-control" id="campins">
-                                            {#campins}
-                                                <option value="{id}">{name}</option>
-                                            {/campins}
-                                        </select>
-                                    </div>
-                                    </div>
-
-
-                                    <div class="row">
+                <form class="form-horizontal" method="post" action="/order/save">
+                    <fieldset>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">基本信息配置</h3>
+                        </div>
+                        <div class="panel-body">
+                                        <div class="row">
                                         <div class="col-md-6 col-sm-offset-1">
-                                            <label class="control-label">所属exchange</label>
+
+                                            <input type="hidden" class="form-control" name="Campin_id" value="{order.Campin_id}">
+
+                                        </div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <div class="col-md-5 col-sm-offset-1">
-                                                <div class="col-md-2">
-                                                <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox">
-                                                </label>
-                                                </div>
-                                                </div>
-                                                <div class="col-md-10">
-                                                <img src="/statics/baidu.jpg"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <div class="col-md-2">
-                                                <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox">
-                                                </label>
-                                                </div>
-                                                </div>
-                                                <div class="col-md-10">
-                                                <img src="/statics/google.jpg"/>
-                                                </div>
-                                            </div>
+                                        <div class="row">
+                                        <div class="col-md-6 col-sm-offset-1">
+                                        <label class="control-label" for="inputDefault">订单名称</label>
+                                        <input type="text" class="form-control" name="Order_name" value="{order.Order_name}">
+                                        <input type="hidden" name="_id" class="form-control" value="{order._id}" >
+                                        </div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <div class="col-md-5 col-sm-offset-1">
-                                                <div class="col-md-2">
-                                                <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox">
-                                                </label>
-                                                </div>
-                                                </div>
-                                                <div class="col-md-10">
-                                                <img src="/statics/tanx.png"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <div class="col-md-2">
-                                                <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox">
-                                                </label>
-                                                </div>
-                                                </div>
-                                                <div class="col-md-10">
-                                                <img src="/statics/hy.jpg"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        <div class="row">
+                                        <div class="col-md-6 col-sm-offset-1">
+                                            <label class="control-label" for="inputDefault">订单状态</label>
 
-                                    <div class="row">
-                                    <div class="col-md-6 col-sm-offset-1">
-                                    <label class="control-label" for="inputDefault">订单预算</label>
-                                    <input type="text" class="form-control" id="count_cost">
-                                    </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-2 col-sm-offset-1">
-                                        <label class="control-label">google</label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">￥</span>
-                                            <input type="text" class="form-control">
-                                            <span class="input-group-btn">
-                                            </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                        <label class="control-label">tanx</label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">￥</span>
-                                            <input type="text" class="form-control">
-                                            <span class="input-group-btn">
-                                            </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                        <label class="control-label">tencent</label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">￥</span>
-                                            <input type="text" class="form-control">
-                                            <span class="input-group-btn">
-                                            </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                        <label class="control-label">mz</label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">￥</span>
-                                            <input type="text" class="form-control">
-                                            <span class="input-group-btn">
-                                            </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-2 col-sm-offset-1">
-                                        <label class="control-label">好耶</label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">￥</span>
-                                            <input type="text" class="form-control">
-                                            <span class="input-group-btn">
-                                            </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                        <label class="control-label">新浪</label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">￥</span>
-                                            <input type="text" class="form-control">
-                                            <span class="input-group-btn">
-                                            </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                        <label class="control-label">搜狐</label>
-                                            <div class="input-group">
-                                            <span class="input-group-addon">￥</span>
-                                            <input type="text" class="form-control">
-                                            <span class="input-group-btn">
-                                            </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-5 col-sm-offset-1">
-                                        <label class="control-label">媒体议价</label>
-                                            <div class="input-group">
-                                                <div class="input-group-btn">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Baidu <span class="caret"></span></button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="#">Baidu</a></li>
-                                                    <li><a href="#">Google</a></li>
-                                                    <li><a href="#">好耶</a></li>
-                                                    <li><a href="#">阿里妈妈</a></li>
-                                                </ul>
-                                                </div><!-- /btn-group -->
-                                                <input type="text" class="form-control">
-                                            </div><!-- /input-group -->
-                                        </div>
-                                        <div class="col-md-5">
-                                        <label class="control-label">广告位议价</label>
-                                            <div class="input-group">
-                                                <div class="input-group-btn">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">广告1 <span class="caret"></span></button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="#">广告1</a></li>
-                                                    <li><a href="#">广告2</a></li>
-                                                    <li><a href="#">广告3</a></li>
-                                                </ul>
-                                                </div><!-- /btn-group -->
-                                                <input type="text" class="form-control">
-                                            </div><!-- /input-group -->
-                                        </div>
-                                    </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">投放时间控制</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form class="form-horizontal">
-                            <fieldset>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">频次控制方式</label>
-                                    <div class="col-lg-3">
-                                        <div class="radio">
-                                            <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                                            按订单
-                                            </label>
-                                        </div>
-                                        <div class="radio">
-                                            <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                            按活动
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">频次控制有效期</label>
-                                    <div class="col-lg-3">
-                                        <label>
-                                        <input type="text" class="form-control">
-                                        </label>
-                                    </div>
-                                    <label class="col-lg-2 control-label">频次控制</label>
-                                    <div class="col-lg-3">
-                                        <label>
-                                        <input type="text" class="form-control">
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">投放时段</label>
-                                    <div class="col-lg-3">
-                                        <label>
-                                        <input type="text" class="form-control">
-                                        </label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">投放策略控制</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form class="form-horizontal">
-                            <fieldset>
-
-                                <div class="form-group">
-                                    <ul class="breadcrumb">
-                                        <li class="active">地域</li>
-                                    </ul>
-                                    <div class="col-md-2 col-sm-offset-1">
-                                        <div class="col-md-9">
-                                        <label for="select" class="control-label">地域定向</label>
-                                        </div>
-                                        <div class="col-md-2">
-                                        <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox">
-                                        </label>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="col-md-3">
-                                        <select id="seachprov" name="seachprov" onchange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');" class="form-control">
-                                        </select>&nbsp;&nbsp;
-                                        </div>
-                                        <div class="col-md-3">
-                                        <select id="seachcity" name="homecity" onchange="changeCity(this.value,'seachdistrict','seachdistrict');" class="form-control">
-                                        </select>&nbsp;&nbsp; 
-                                        </div>
-                                        <div class="col-md-3">
-                                        <span id="seachdistrict_div">
-                                            <select id="seachdistrict" name="seachdistrict" class="form-control">
-                                            </select></span>
-                                        </div>
-                                        
-                                        <div class="col-md-3">
-                                            <input type="button" class="form-control" value="获取地区" onclick="showAreaID()"/>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <ul class="breadcrumb">
-                                        <li class="active">媒体</li>
-                                    </ul>
-                                    <div class="col-md-4 col-sm-offset-1">
-                                    <label for="select" class="control-label">匿名媒体定向</label>
-                                    <select class="form-control" id="anonymous_filter">
-                                        {#anonymous}
-                                            <option value="{id}">{name}</option>
-                                        {/anonymous}
-                                    </select>
-                                    </div>
-                                    <div class="col-md-4 col-sm-offset-1">
-                                    <label class="control-label" for="inputDefault">url定向</label>
-                                    <input type="text" class="form-control" id="count_cost">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <ul class="breadcrumb">
-                                        <li class="active">终端信息</li>
-                                    </ul>
-                                    <div class="col-md-2 col-sm-offset-1">
-                                        <label for="select" class="control-label">操作系统定向</label>
-                                        <div class="checkbox">
-                                        <label>
-                                        <input type="checkbox"> windows
-                                        </label>
-                                        </div>
-                                        <div class="checkbox">
-                                        <label>
-                                        <input type="checkbox"> linux
-                                        </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 col">
-                                        <label for="select" class="control-label">浏览器定向</label>
-                                        <div class="checkbox">
-                                        <label>
-                                        <input type="checkbox"> chrome
-                                        </label>
-                                        </div>
-                                        <div class="checkbox">
-                                        <label>
-                                        <input type="checkbox"> IE
-                                        </label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group" >
-                                        <ul class="breadcrumb">
-                                            <li class="active">广告</li>
-                                        </ul>
-                                        <div class="col-md-4 col-sm-offset-1">
-                                        <label class="control-label">广告相对位置</label>
-                                        <div class="col-md-10">
-                                            <div class="radio">
-                                                <label>
-                                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                                                未知
-                                                </label>
-                                            </div>
-                                            <div class="radio">
-                                                <label>
-                                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                                首屏
-                                                </label>
-                                            </div>
-                                            <div class="radio">
-                                                <label>
-                                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                                非首屏
-                                                </label>
-                                            </div>
-                                        </div>
-                                        </div>
-                                        <div class="col-md-2 col-sm-offset-1">
-                                            <label for="select" class="control-label">广告形式定向</label>
-                                            <select class="form-control" id="gender_filter">
-                                                <option value="gender_male">页面固定广告位</option>
-                                                <option value="gender_female">弹窗广告位</option>
-                                                <option value="gender_all">页面漂浮广告位</option>
-                                                <option value="gender_all">客户端广告位</option>
+                                            <select class="form-control" name="Active">
+                                                <option {@eq key=order.Active value="1"}selected="selected"{/eq} value="1">正常</option>
+                                                <option {@eq key=order.Active value="0"}selected="selected"{/eq} value="0">停止</option>
                                             </select>
                                         </div>
-                                        <label class="col-lg-2 control-label">广告位ID定向</label>
+                                        </div>
+
+                                        <div class="row">
+                                        <div class="col-md-6 col-sm-offset-1">
+                                        <label class="control-label" for="inputDefault">订单预算</label>
+                                        <input type="text" class="form-control" name="Count_cost" value="{order.Count_cost}">
+                                        </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-2 col-sm-offset-1">
+                                            <label class="control-label">芒果AMAX</label>
+                                                <div class="input-group">
+                                                <span class="input-group-addon">￥</span>
+                                                <input type="text" class="form-control" name="Max_price_mo" value="{order.Max_price_mo}">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                        <label class="col-lg-2 control-label">投放方式</label>
+                                        <div class="col-lg-3">
+                                            {#order.Delivery_type}
+                                            <div class="radio">
+                                                <label>
+                                                <input type="radio" name="Delivery_type" value="1" {@eq key=order.Delivery_type value="1"}checked=""{/eq}>
+                                                CPM
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                <input type="radio" name="Delivery_type" value="2" {@eq key=order.Delivery_type value="2"}checked=""{/eq}>
+                                                CPC
+                                                </label>
+                                            </div>
+                                            {:else}
+
+                                            <div class="radio">
+                                                <label>
+                                                <input type="radio" name="Delivery_type" value="1" checked="" >
+                                                CPM
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                <input type="radio" name="Delivery_type" value="2" >
+                                                CPC
+                                                </label>
+                                            </div>
+
+                                            {/order.Delivery_type}
+
+
+                                        </div>
+                                    </div>
+
+                        </div>
+                    </div>
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">投放时间控制</h3>
+                        </div>
+                        <div class="panel-body">
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">频次控制方式</label>
+                                        <div class="col-lg-3">
+                                            {#order.Freq_ctr}
+                                            <div class="radio">
+                                                <label>
+                                                <input type="radio" name="Freq_ctr" value="1" {@eq key=order.Freq_ctr value="1"}checked=""{/eq}>
+                                                按订单
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                <input type="radio" name="Freq_ctr" value="2" {@eq key=order.Freq_ctr value="2"}checked=""{/eq}>
+                                                按活动
+                                                </label>
+                                            </div>
+                                            {:else}
+                                            
+                                            <div class="radio">
+                                                <label>
+                                                <input type="radio" name="Freq_ctr" value="1" checked="">
+                                                按订单
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                <input type="radio" name="Freq_ctr" value="2">
+                                                按活动
+                                            </label>
+                                            </div>
+
+                                            {/order.Freq_ctr}
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">频次控制有效期</label>
+                                        <div class="col-lg-4">
+                                            {#order.Freq_timeout}
+                                            <div class="radio col-md-3">
+                                            <input type="radio" name="Freq_timeout" value="天" {@eq key=order.Freq_timeout value="天"}checked=""{/eq}>
+                                            <label>
+                                                天
+                                            </label>
+                                            </div>
+
+                                            <div class="radio col-md-3">
+                                            <input type="radio" name="Freq_timeout" value="小时" {@eq key=order.Freq_timeout value="小时"}checked=""{/eq}>
+                                            <label>
+                                                小时
+                                            </label>
+                                            </div>
+                                            {:else}
+
+                                            <div class="radio col-md-3">
+                                            <input type="radio" name="Freq_timeout" value="天" checked="">
+                                            <label>
+                                                天
+                                            </label>
+                                            </div>
+
+                                            <div class="radio col-md-3">
+                                            <input type="radio" name="Freq_timeout" value="小时" >
+                                            <label>
+                                                小时
+                                            </label>
+                                            </div>
+
+
+                                            {/order.Freq_timeout}
+
+                                        </div>
+                                        <label class="col-lg-2 control-label">频次控制</label>
                                         <div class="col-lg-3">
                                             <label>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" name="Freq" value="{order.Freq}">
                                             </label>
                                         </div>
-                                </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">投放时段</label>
+                                        <div class="col-sm-offset-2"> 
 
-                                <div class="form-group">
-                                    <ul class="breadcrumb">
-                                            <li class="active">人群</li>
-                                    </ul>
-                                    <div class="col-md-3 col-sm-offset-1">
+                                        {#L_time} 
+                                            <div class="checkbox col-md-1" >
+                                                <label>{value}</label>
+                                                <input name="L_time" type="checkbox" {?ischecked} checked {/ischecked} value="{value}">
+                                            </div>
+                                        {/L_time}                                                
+
+                                        </div>
+
+                                    </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">投放策略控制</h3>
+                        </div>
+                        <div ng-init="Region_in='{Region_in}'" class="panel-body">
+                                    <div ng-controller="regionControl" class="form-group">
+                                        <ul class="breadcrumb">
+                                            <li class="active">地域定向</li>
+                                        </ul>
+
+                                        <div class="col-sm-offset-1" id="area_checkbox">
+                                            
+                                            <div ng-repeat="a in area_array" class="checkbox col-md-2"><label>{~lb}{~lb}a.label{~rb}{~rb}</label><input name="Region_in" type="checkbox" ng-checked="{~lb}{~lb}a.ischecked{~rb}{~rb}" value="{~lb}{~lb}a.value{~rb}{~rb}"></div>
+                                            
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+
+                                    function regionControl($scope,$http){
+
+                                        $scope.reg = [];
+
+                                        if($scope.Region_in){
+
+                                            $scope.reg = angular.fromJson($scope.Region_in);
+
+                                        }
+
+                                        var regj = 0 ; 
+
+                                        $scope.area_array = [];
+
+                                        for( a in area_array ){
+
+                                            if(regj < $scope.reg.length && a == $scope.reg[regj]){
+
+                                                $scope.area_array.push({label:area_array[a],value:a,ischecked:true});
+
+                                                regj++;
+
+                                            }else {
+
+                                                $scope.area_array.push({label:area_array[a],value:a,ischecked:false});
+
+                                            }
+
+                                            
+
+                                        }
+
+                                    }
+
+                                    </script>
+                                    <div ng-init="p='{p}'"></div>
+                                    <div ng-controller="mediaControl">
+                                    <div class="form-group">
+                                        <ul class="breadcrumb">
+                                            <li class="active">媒体定向</li>
+                                        </ul>
+                                    </div>
+
+                                    <div>
+                                    <div class="row">
+                                    <div class="col-md-6 col-sm-offset-1">
+                                    <label class="control-label" for="inputDefault">媒体定向</label>
+                                    <input type="hidden" ng-model="Url_in" ng-value="Url_in_value" name="Url_in" >
+                                    </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                    <div class="col-sm-offset-1">
+                                    <div class="col-md-1"><label class="control-label" for="inputDefault">媒体</label></div>
+                                    
+                                    <div class="col-md-3"><input type="text" class="form-control" ng-model="Url_in_url" value=''></div>
+
+                                    <div class="col-md-3"><button type="button" class="btn btn-success" ng-click="url_add()">添加</button></div>
+                                    </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-10 col-sm-offset-1 text-center" style="padding:15px">
+                                            <table class="table table-bordered">
+                                                <tbody>
+
+                                                    <tr ng-repeat="x in Url_in">
+                                                        <td>{~lb}{~lb}x{~rb}{~rb}</td>
+                                                        <td>
+                                                        <button type="button" class="btn btn-xs btn-link" ng-click="url_del($index)"><p class="text-danger">删除</p></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <div>
+                                    <div class="row">
+                                    <div class="col-md-6 col-sm-offset-1">
+                                    <label class="control-label" for="inputDefault">媒体议价</label>
+                                    <input type="hidden" ng-model="Url_price" ng-value="Url_price_value" name="Url_price" >
+                                    </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                    <div class="col-sm-offset-1">
+                                    <div class="col-md-1"><label class="control-label" for="inputDefault">媒体</label></div>
+                                    
+                                    <div class="col-md-3"><input type="text" class="form-control" ng-model="Media_Url" value=''></div>
+
+                                    <div class="col-md-1"><label class="control-label" for="inputDefault">Price</label></div>
+                                    <div class="col-md-3"><input type="text" class="form-control" ng-model="Media_price" value=''></div>
+                                    <div class="col-md-3"><button type="button" class="btn btn-success" ng-click="add()">添加</button></div>
+                                    </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-10 col-sm-offset-1 text-center" style="padding:15px">
+                                            <table class="table table-bordered">
+                                                <tbody>
+
+                                                    <tr ng-repeat="x in Url_price">
+                                                        <td>{~lb}{~lb}x.Url{~rb}{~rb}</td>
+                                                        <td>{~lb}{~lb}x.Price{~rb}{~rb}</td>
+                                                        <td>
+                                                        <button type="button" class="btn btn-xs btn-link" ng-click="del($index)"><p class="text-danger">删除</p></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    </div>
+
+                                    <script type="text/javascript">
+
+                                        function mediaControl($scope,$http){
+
+
+                                            if($scope.p){
+
+                                                $scope.p = angular.fromJson($scope.p);
+
+                                            }
+
+                                            if($scope.p && $scope.p.Url_in){
+
+                                                $scope.Url_in = $scope.p.Url_in;
+                                                $scope.Url_in_value = angular.toJson($scope.Url_in);
+
+                                            }else{
+
+                                                $scope.Url_in = [];
+                                                $scope.Url_in_value = angular.toJson($scope.Url_in);
+
+                                            };
+
+
+                                            $scope.url_add = function(){
+
+                                                console.log(!_.find($scope.Url_in,function(url){
+
+                                                    return url == $scope.Url_in_url;
+
+                                                }));
+
+                                                if(!_.find($scope.Url_in,function(url){
+
+                                                    return url == $scope.Url_in_url;
+
+                                                })){
+
+                                                    $scope.Url_in.push($scope.Url_in_url);
+                                                    $scope.Url_in_value = angular.toJson($scope.Url_in);
+                                                   
+
+                                                };
+
+
+
+                                            };
+
+                                            $scope.url_del = function(i){
+
+                                                $scope.Url_in.splice(i,1);
+                                                $scope.Url_in_value = angular.toJson($scope.Url_in);
+
+                                            };
+
+
+
+                                            if($scope.p && $scope.p.Url_price){
+
+                                                $scope.Url_price = $scope.p.Url_price;
+                                                $scope.Url_price_value = angular.toJson($scope.Url_price);
+
+                                            }else{
+
+                                                $scope.Url_price = [];
+                                                $scope.Url_price_value = angular.toJson($scope.Url_price);
+
+                                            };
+
+
+                                            $scope.add = function(){
+
+                                                $scope.Url_price.push({Url: $scope.Media_Url, Price: $scope.Media_price });
+                                                $scope.Url_price_value = angular.toJson($scope.Url_price);
+
+                                            };
+
+                                            $scope.del = function(i){
+
+                                                $scope.Url_price.splice(i,1);
+                                                $scope.Url_price_value = angular.toJson($scope.Url_price);
+
+                                            };
+
+                                        }
+
+
+                                    </script>
+
+
+
+                                    <div ng-controller="browserControl" class="form-group">
+                                        <ul class="breadcrumb">
+                                            <li class="active">浏览器定向</li>
+                                        </ul>
+                                        <div class="col-sm-offset-1">
+
+                                            <div ng-repeat="b in browser_in" class="checkbox col-md-2"><label>{~lb}{~lb}b.label{~rb}{~rb}</label><input name="Browser_in" type="checkbox" ng-checked="{~lb}{~lb}b.ischecked{~rb}{~rb}" value="{~lb}{~lb}b.value{~rb}{~rb}"></div>
+                                        </div>
+                                    </div>
+
+                                    <script type="text/javascript">
+
+                                    function browserControl($scope,$http){
+
+                                        var d_in = [];
+                                        if($scope.p){
+
+                                            $scope.p = angular.fromJson($scope.p);
+                                            d_in = $scope.p.Browser_in;
+
+                                        }
+
+                                        
+                                        var all = ['360SE'
+                                                    ,'SE2.XMetaSr'
+                                                    ,'TheWorld'
+                                                    ,'Maxthon'
+                                                    ,'TencentTraveler'
+                                                    ,'MyIE2'
+                                                    ,'Firefox'
+                                                    ,'IE9'
+                                                    ,'IE8'
+                                                    ,'IE7'
+                                                    ,'IE6'
+                                                    ,'IE5'
+                                                    ,'IE4'
+                                                    ,'IE3'
+                                                    ,'Konqueror'
+                                                    ,'Navigator'
+                                                    ,'Netscape'
+                                                    ,'Opera'
+                                                    ,'Chrome'
+                                                    ,'Safari'
+                                                    ,'Mozilla'];
+
+                                        $scope.browser_in = [];
+
+                                        var k = 0;
+
+                                        for( a in all ){
+
+                                            if(k < d_in.length && all[a] == d_in[k]){
+
+                                                $scope.browser_in.push({label:all[a],value:all[a],ischecked:true});
+
+                                                k++;
+
+                                            }else {
+
+                                                $scope.browser_in.push({label:all[a],value:all[a],ischecked:false});
+
+                                            }
+
+                                        };
+
+                                    }
+
+
+                                    </script>
+
+                                    <div ng-controller="opControl" class="form-group">
+                                        <ul class="breadcrumb">
+                                            <li class="active">操作系统定向</li>
+                                        </ul>
+                                        <div class="col-sm-offset-1">
+
+                                            <div ng-repeat="b in op_in" class="checkbox col-md-3"><label>{~lb}{~lb}b.label{~rb}{~rb}</label><input name="Operation_in" type="checkbox" ng-checked="{~lb}{~lb}b.ischecked{~rb}{~rb}" value="{~lb}{~lb}b.value{~rb}{~rb}"></div>
+                                        </div>
+                                    </div>
+
+                                    <script type="text/javascript">
+
+                                    function opControl($scope,$http){
+
+                                        var d_in = [];
+                                        if($scope.p){
+
+                                            $scope.p = angular.fromJson($scope.p);
+                                            d_in = $scope.p.Operation_in;
+
+                                        }
+
+                                        
+                                        var all = ['Windows8',
+                                                    'Windows7',
+                                                    'Vista',
+                                                    'WindowsXP',
+                                                    'Windows2000',
+                                                    'WindowsServer2003',
+                                                    'WindowsNT4',
+                                                    'WindowsME',
+                                                    'Windows98',
+                                                    'iOS-ipad',
+                                                    'iOS-iphone',
+                                                    'MacOS',
+                                                    'Android',
+                                                    'GoogleWebOS',
+                                                    'Linux'];
+
+
+
+
+                                        $scope.op_in = [];
+
+                                        var k = 0;
+
+                                        for( a in all ){
+
+                                            if(k < d_in.length && all[a] == d_in[k]){
+
+                                                $scope.op_in.push({label:all[a],value:all[a],ischecked:true});
+
+                                                k++;
+
+                                            }else {
+
+                                                $scope.op_in.push({label:all[a],value:all[a],ischecked:false});
+
+                                            }
+
+                                        };
+
+                                    }
+
+
+                                    </script>
+
+
+
+                                    <div ng-controller="adslotidInControl" class="form-group">
+                                        <ul class="breadcrumb">
+                                            <li class="active">广告位定向</li>
+                                        </ul>
+                                        <div class="col-sm-offset-1">
+                                            <div ng-repeat="a in adslotid_in" class="checkbox col-md-2"><label>{~lb}{~lb}a.label{~rb}{~rb}</label><input name="Adslotid_in" type="checkbox" ng-checked="{~lb}{~lb}a.ischecked{~rb}{~rb}" value="{~lb}{~lb}a.value{~rb}{~rb}"></div>
+                                        </div>
+                                    </div>
+
+                                    
+
+                                    <div ng-controller="slotControl" >
+
+                                    <div class="row">
+                                    <div class="col-md-6 col-sm-offset-1">
+                                    <label class="control-label" for="inputDefault">广告位议价</label>
+                                    <input type="hidden" ng-model="Slot_price" ng-value="Slot_price_value" name="Slotid_price" >
+                                    </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                    <div class="col-sm-offset-1">
+                                    <div class="col-md-1"><label class="control-label" for="inputDefault">广告位</label></div>
+                                    
+                                    <div class="col-md-3">
+
+                                        <select class="form-control" ng-model="s_id" ng-options="ads.name for ads in adslot_all"></select>
+
+                                    </div>
+
+                                    <div class="col-md-1"><label class="control-label" for="inputDefault">比例</label></div>
+                                    <div class="col-md-3"><input type="text" class="form-control" ng-model="s_price" value=''></div>
+                                    <div class="col-md-3"><button type="button" class="btn btn-success" ng-click="add()">添加</button></div>
+                                    </div>
+                                    </div>
+
+
+                                    <div class="row" style="padding:10px">
+                                        <div class="col-md-10 col-sm-offset-1 text-center">
+                                            <table class="table table-bordered">
+                                                <tbody>
+
+                                                    <tr ng-repeat="x in Slot_price">
+                                                        <td>{~lb}{~lb}x.Slotid{~rb}{~rb}</td>
+                                                        <td>{~lb}{~lb}x.Price{~rb}{~rb}</td>
+                                                        <td>
+                                                        <button type="button" class="btn btn-xs btn-link" ng-click="del($index)"><p class="text-danger">删除</p></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    
+
+                                    <script type="text/javascript">
+
+                                    function adslotidInControl($scope,$http){
+
+                                        var d_in = [];
+                                        if($scope.p){
+
+                                            $scope.p = angular.fromJson($scope.p);
+                                            d_in = $scope.p.Adslotid_in;
+
+                                        }
+
+                                        var all = ['首屏','第二屏','第三屏','其他'];
+
+                                        $scope.adslotid_in = [];
+
+                                        var k = 0;
+
+                                        for( a in all ){
+
+                                            if(k < d_in.length && all[a] == d_in[k]){
+
+                                                $scope.adslotid_in.push({label:all[a],value:all[a],ischecked:true});
+
+                                                k++;
+
+                                            }else {
+
+                                                $scope.adslotid_in.push({label:all[a],value:all[a],ischecked:false});
+
+                                            }
+
+                                        };
+
+                                    }
+
+                                    function slotControl($scope,$http){
+
+                                        $scope.adslot_all = [
+                                        {id : 1, name : '首屏'},
+                                        {id : 2, name : '第二屏'},
+                                        {id : 3, name : '第三屏'},
+                                        {id : 4, name : '其他'}];
+
+                                        $scope.s_id = $scope.adslot_all[0];
+
+
+                                        if($scope.p){
+
+                                            $scope.p = angular.fromJson($scope.p);
+                                            $scope.Slot_price = $scope.p.Slotid_price;
+                                            $scope.Slot_price_value = angular.toJson($scope.Slot_price);
+
+                                        }else{
+
+                                            $scope.Slot_price = [];
+                                            $scope.Slot_price_value = angular.toJson($scope.Slot_price);
+
+                                        }
+
+
+
+
+                                        $scope.add = function(){
+
+                                            $scope.Slot_price.push({Slotid: $scope.s_id.name, Price: $scope.s_price });
+                                            $scope.Slot_price_value = angular.toJson($scope.Slot_price);
+
+                                        };
+
+                                        $scope.del = function(i){
+
+                                            $scope.Slot_price.splice(i,1);
+                                            $scope.Slot_price_value = angular.toJson($scope.Slot_price);
+
+                                        };
+
+                                    }
+
+
+                                    </script>
+
+                                    
+                                    <div ng-controller="tagCtrl" class="form-group">
+                                        <ul class="breadcrumb">
+                                            <li class="active">人群定向</li>
+                                        </ul>
+
+                                        <input type="hidden" ng-value="Tag_selected_value" name="Tags" >
+
+                                        <div class="col-sm-offset-1 col-md-4 panel panel-success" style="padding-left:0px;padding-right:0px">
+                                          <div class="panel-heading"><h3 class="panel-title">可选标签</h3></div>
+                                          <div class="panel-body pre-scrollable " style="height:300px">
+                                            <ul class="list-group">
+
+                                                <li class="list-group-item" ng-repeat="tag in tag_all">
+                                                    {~lb}{~lb}tag.Tag_name{~rb}{~rb}
+                                                    <button type="button" style="float:right;" ng-class="{disabled: tag.isSelected}" class="btn btn-xs btn-link" ng-click="add($index)">
+
+                                                        <span class="badge">添加</span>
+
+                                                    </button>
+
+                                                </li>
+
+                                            </ul>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-sm-offset-1 col-md-4 panel panel-success" style="padding-left:0px;padding-right:0px">
+                                          <div class="panel-heading"><h3 class="panel-title">已选标签</h3></div>
+                                          <div class="panel-body  pre-scrollable" style="height:300px">
+                                            <ul class="list-group">
+
+                                                <li class="list-group-item" ng-repeat="tag in Tag_selected">
+                                                    {~lb}{~lb}tag.Tag_name{~rb}{~rb}
+                                                    <button type="button" style="float:right;" class="btn btn-xs btn-link" ng-click="del($index)">
+
+                                                        <span class="badge">删除</span>
+
+                                                    </button>
+
+                                                </li>
+
+                                            </ul>
+                                          </div>
+                                        </div>
+
+                                            
+                                    </div>
+
+                                    <script type="text/javascript">
+
+                                            function tagCtrl($scope,$http){
+
+                                                $scope.tag_all = [{Tag_id:"000100000000",Tag_name:"网购" , isSelected : false },
+                                                            {Tag_id:"000200000000",Tag_name : "体育" , isSelected : false },
+                                                            {Tag_id:"000300000000",Tag_name : "吃喝" , isSelected : false },
+                                                            {Tag_id:"000400000000",Tag_name : "财经" , isSelected : false },
+                                                            {Tag_id:"000500000000",Tag_name : "出国" , isSelected : false },
+                                                            {Tag_id:"000600000000",Tag_name : "动漫" , isSelected : false },
+                                                            {Tag_id:"000700000000",Tag_name : "房产" , isSelected : false },
+                                                            {Tag_id:"000800000000",Tag_name : "阅读" , isSelected : false },
+                                                            {Tag_id:"000900000000",Tag_name : "音乐" , isSelected : false },
+                                                            {Tag_id:"000A00000000",Tag_name : "公益" , isSelected : false },
+                                                            {Tag_id:"000B00000000",Tag_name : "家居" , isSelected : false },
+                                                            {Tag_id:"000C00000000",Tag_name : "健康" , isSelected : false },
+                                                            {Tag_id:"000D00000000",Tag_name : "教育" , isSelected : false },
+                                                            {Tag_id:"000E00000000",Tag_name : "军事" , isSelected : false },
+                                                            {Tag_id:"000F00000000",Tag_name : "科技" , isSelected : false },
+                                                            {Tag_id:"001100000000",Tag_name : "旅游" , isSelected : false },
+                                                            {Tag_id:"001200000000",Tag_name : "母婴" , isSelected : false },
+                                                            {Tag_id:"001300000000",Tag_name : "汽车" , isSelected : false },
+                                                            {Tag_id:"001400000000",Tag_name : "摄影" , isSelected : false },
+                                                            {Tag_id:"001500000000",Tag_name : "新闻" , isSelected : false },
+                                                            {Tag_id:"001600000000",Tag_name : "星座" , isSelected : false },
+                                                            {Tag_id:"001700000000",Tag_name : "传媒" , isSelected : false },
+                                                            {Tag_id:"001800000000",Tag_name : "游戏" , isSelected : false }];
+
+                                                var tags_id_in = [];
+
+                                                $scope.Tag_selected = [];
+                                                $scope.Tag_selected_value = '';
+
+                                                console.log($scope.p.Tags);
+
+                                                if($scope.p){
+
+                                                    $scope.p = angular.fromJson($scope.p);
+                                                    tags_id_in = $scope.p.Tags;
+
+                                                    for(var ti = 0 ; ti < tags_id_in.length; ti++){
+
+                                                        for(var tj = 0 ; tj < $scope.tag_all.length ; tj++){
+
+                                                            if(tags_id_in[ti] == $scope.tag_all[tj].Tag_id){
+                                                                
+                                                                $scope.tag_all[tj].isSelected = true;
+                                                                $scope.Tag_selected.push($scope.tag_all[tj]);
+                                                                
+                                                                console.log($scope.tag_all[tj]);
+                                                                console.log($scope.Tag_selected);
+                                                            }
+
+                                                        }
+                                                        
+
+                                                    }
+
+                                                }
+
+
+
+                                                $scope.Tag_selected_value = angular.toJson($scope.Tag_selected);
+                                                
+
+                                                $scope.add = function(i){
+
+                                                    var sr = $scope.tag_all[i];
+
+                                                    sr.isSelected = true;
+
+                                                    $scope.Tag_selected.push(sr);
+
+                                                    $scope.Tag_selected_value = angular.toJson($scope.Tag_selected);
+
+                                                };
+
+                                                $scope.del = function(i){
+
+                                                    var sr = $scope.Tag_selected[i];
+
+                                                    sr.isSelected = false;
+
+                                                    $scope.Tag_selected.splice(i,1);
+
+                                                    $scope.Tag_selected_value = angular.toJson($scope.Tag_selected);
+
+                                                };
+
+                                            }
+
+                                    </script>
+
+                                    <!--
+                                    <div ng-controller="slot_visibilityControl" class="form-group">
+                                        <ul class="breadcrumb">
+                                            <li class="active">Slot_visibility</li>
+                                        </ul>
+                                        <div class="col-sm-offset-1">
+                                            <div ng-repeat="s in adslotid_in" class="checkbox col-md-2"><label>{~lb}{~lb}s.label{~rb}{~rb}</label><input name="Slot_visibility" type="checkbox" ng-checked="{~lb}{~lb}s.ischecked{~rb}{~rb}" value="{~lb}{~lb}s.value{~rb}{~rb}"></div>
+
+                                        </div>
+                                    </div>
+
+                                    <script type="text/javascript">
+
+                                    function slot_visibilityControl($scope,$http){
+
+                                        var d_in = [];
+                                        if($scope.p){
+
+                                            $scope.p = angular.fromJson($scope.p);
+                                            d_in = $scope.p.Slot_visibility;
+
+                                        }
+                                        
+                                        var all = ['1','2'];
+                                        $scope.adslotid_in = [];
+
+                                        var k = 0;
+
+                                        for( a in all ){
+
+                                            if(k < d_in.length && all[a] == d_in[k]){
+
+                                                $scope.adslotid_in.push({label:all[a],value:all[a],ischecked:true});
+
+                                                k++;
+
+                                            }else {
+
+                                                $scope.adslotid_in.push({label:all[a],value:all[a],ischecked:false});
+
+                                            }
+
+                                        };
+
+                                    }
+
+                                    </script>
+
+                                    <input type="hidden" name="Record_data" class="form-control" value="0" >
+                                    <input type="hidden" name="Is_dm" class="form-control" value="0" >
+                                    <input type="hidden" name="Classid_use" class="form-control" value="0" >
+                                    <input type="hidden" name="Retarget_use" class="form-control" value="0" >
+                                    <input type="hidden" name="Anonymous_filter" class="form-control" value="0" >
+                                    <input type="hidden" name="Gender_filter" class="form-control" value="gender_all" >
+                                    -->
+                                    
+
+                                    <div class="row" >
+                                            <h1></h1>
+                                        </div>
+                                        <div class="row" >
                                         <div class="col-md-9">
-                                        <label for="select" class="control-label">回头客定向</label>
                                         </div>
                                         <div class="col-md-2">
-                                        <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox">
-                                        </label>
-                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-right">保存</button>
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
-                                    </div>
-                                </div>
 
-                                <div class="row" >
-                                        <h1></h1>
-                                    </div>
-                                    <div class="row" >
-                                    <div class="col-md-9">
-                                    </div>
-                                    <div class="col-md-2">
-                                    <button type="submit" class="btn btn-primary btn-right">保存</button>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                    </fieldset>
+                </form>
                 {/list}
             </div>
+            
             <script src="/js/Area.js" type="text/javascript"></script>
+            
             <script src="/js/AreaData_min.js" type="text/javascript"></script>
-            <script type="text/javascript">
 
-                $(function () {
-                    initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, '44', '0', '0');
-                });
+            <script src="/components/angular/angular.min.js" type="text/javascript"></script>
 
-                //得到地区码
-                function  getAreaID() {
-                    var area = 0;          
-                    if ($("#seachdistrict").val() != "0") {
-                        area = $("#seachdistrict").val();                
-                    }
-                    else if ($("#seachcity").val() != "0") {
-                        area = $("#seachcity").val();
-                    }
-                    else {
-                        area = $("#seachprov").val();
-                    }
-                    
-                    return area;
-                }
+            <script src="/components/underscore/underscore-min.js" type="text/javascript"></script>
 
-                function showAreaID() {
-                    //地区码
-                    var areaID = getAreaID();
-                    //地区名
-                    var areaName = getAreaNamebyID(areaID) ;
-                    alert("您选择的地区码：" + areaID + "      地区名：" + areaName);            
-                }
-
-                //根据地区码查询地区名
-                function getAreaNamebyID(areaID) {
-                    var areaName = "";
-                    if (areaID.length == 2) {
-                        areaName = area_array[areaID];
-                    }
-                    else if (areaID.length == 4) {
-                        var index1 = areaID.substring(0, 2);
-                        areaName = area_array[index1] + " " + sub_array[index1][areaID];
-                    }
-                    else if (areaID.length == 6) {
-                        var index1 = areaID.substring(0, 2);
-                        var index2 = areaID.substring(0, 4);
-                        areaName = area_array[index1] + " " + sub_array[index1][index2] + " " + sub_arr[index2][areaID];
-                    }
-                    return areaName;
-                }
-            </script>
 {/manageform}

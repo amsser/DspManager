@@ -9,8 +9,8 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "kraken-js": "^0.7.0",
-    "express": "~3.4.4",
+    "kraken-js": "*",
+    "express": "*",
     "nconf": "^0.6.8",
     "dustjs-helpers": "~1.2.0",
     "dustjs-linkedin": "~2.3.4",
@@ -27,6 +27,12 @@
     "underscore" : "*",
     "moment" : "*",
     "images" : "*",
-    "accounting" : "*"
+    "accounting" : "*",
+    "recluster" : "*",
+    "request" : "*",
+    "line-reader" : "*",
+    "redis" : "*",
+    "q" : "*",
+    "async" : "*"
   }
 }

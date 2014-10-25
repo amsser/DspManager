@@ -1,51 +1,60 @@
 {>"layouts/adbase" /}
 
 {<manageform}
-            <div class="row">
-            {?ads}
+            <div ng-app class="row">
+            {?list}
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">广告列表</h3>
                     </div>
                     <div class="panel-body">   
+
                     <div class="row">
+                    
+                    <!--
+                    <form class="form-horizontal" method="post" action="/ad/find">
+                        <fieldset>
                         <div class="col-md-2">
                             <h4><span class="control-label">广告查询 : </span></h4>
                         </div>
 
-
                         <div class="col-md-2">
-                            <input size="16" type="text" value="" class="form-control form_datetime">
+                            <input size="16" type="text" value="" name="ad_id" class="form-control form_datetime">
                         </div>
 
                         <div class="col-md-2">
-                            <input size="16" type="text" value="" class="form-control form_datetime">
+                            <button type="submit" class="btn btn-primary btn-md">查询</button>
                         </div>
 
-                        <div class="col-md-2">
-                            <a href="/ad/find"><button type="button" class="btn btn-primary btn-md">查询</button></a>
-                        </div>
+                        
+                        </fieldset>
+                    </form>
+                    -->
 
-                        <div class="col-md-2">
-                            <a href="/ad/create"><button type="button" class="btn btn-success btn-md">添加</button></a>
-                        </div>
+                    <div class="col-md-2">
+                            <a href="/ad/get?o_id={Order_id}"><button type="button" class="btn btn-success btn-md">添加</button></a>
+                    </div>
+
                     </div>
 
                     <table class="table table-striped table-hover ">
                         <thead id="titlediv">
                             <tr>
                             <th>广告ID</th>
-                            <th>所属订单</th>
                             <th>广告尺寸</th>
+                            <th>创意地址</th>
                             </tr>
                         </thead>
                         <tbody id="recordsdiv">
                             {#ads}
                             <tr>
-                            <td><a href="/ad/get?id={id}">广告{id}</a></td>
-                            <td>{order}</td>
-                            <td>{size}</td>
-                            <td><a href="/ad/delete?id={id}"><button type="button" class="btn btn-danger btn-xs">删除</button></a></td>
+                            <td>{Ad_name}</td>
+                            <td>{Size}</td>
+                            <td><a href="{Creative_url}">查看创意</a></td>
+                            <td>
+                                <a href="/ad/get?id={_id}&o_id={Order_id}"><button type="button" class="btn btn-success btn-xs">编辑</button></a>
+                                <a href="/ad/delete?id={_id}&o_id={Order_id}"><button type="button" class="btn btn-danger btn-xs">删除</button></a>
+                            </td>
                             </tr>
                             {/ads}
                         </tbody>
@@ -53,21 +62,23 @@
                     </div>
                 </div>
             {:else}
-                <div class="panel panel-primary">
+                <div ng-init="id='{id}'" ></div>
+                <div ng-controller='formControl' ng-init="o_id='{Order_id}'" class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">广告投放配置</h3>
                     </div>
                     <div class="panel-body">
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" method="post" action="/ad/save">
                             <fieldset>
                                     <div class="row">
-                                    <div class="col-md-6 col-sm-offset-1">
-                                        <label for="select" class="control-label">所属订单</label>
-                                        <select class="form-control" id="campins">
-                                            {#orders}
-                                                <option value="{id}">{name}</option>
-                                            {/orders}
-                                        </select>
+                                    <div class="col-md-4 col-sm-offset-1">
+                                    <label class="control-label" for="inputDefault">广告名称</label>
+                                        <div class="row">
+                                        <div class="col-md-10">
+                                        <input type="hidden" name="Order_id" ng-model="o_id" ng-value="o_id" >
+                                        <input type="text" name="Ad_name" ng-model="ad.Ad_name" class="form-control input-xs" id="count_cost">
+                                        </div>
+                                        </div>
                                     </div>
                                     </div>
 
@@ -76,69 +87,32 @@
                                     <label class="control-label" for="inputDefault">广告尺寸</label>
                                         <div class="row">
                                         <div class="col-md-5">
-                                        <input type="text" class="form-control input-xs" id="count_cost">
+                                        <input type="text" name="Size" ng-model="ad.Size" class="form-control input-xs" id="count_cost">
                                         </div>
-                                        <div class="col-md-1">
-                                        *
-                                        </div>
-                                        <div class="col-md-5">
-                                        <input type="text" class="form-control input-xs" id="count_cost">
-                                        </div>
-                                        </div>
+                                    </div>
                                     </div>
                                     </div>
 
                                     <div class="row" >
-                                        <div class="col-md-4 col-sm-offset-1">
-                                        <label class="control-label">广告类型</label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2 col-sm-offset-1">
+                                        <label class="control-label">类型</label>
+                                        </div>
+                                        <div class="col-md-8">
                                             <div class="radio">
                                                 <label>
-                                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                                                <input type="radio" name="Ad_type" ng-model="ad.Ad_type" value="1" >
                                                 banner
                                                 </label>
                                             </div>
-                                            <div class="radio">
-                                                <label>
-                                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                                video
-                                                </label>
-                                            </div>
-                                        </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                        <label class="control-label">时长</label>
-                                        <div class="input-group">
-                                        <input type="text" class="form-control" id="count_cost">
-                                        <span class="input-group-addon">秒</span>
-                                        </div>
-                                        </div>
-                                    </div>
 
-                                    <div class="row">
-                                    <div class="col-md-4 col-sm-offset-1">
-                                    <label class="control-label" for="inputDefault">视频定向一级频道</label>
-                                    <input type="text" class="form-control" id="count_cost">
-                                    </div>
-                                    <div class="col-md-4">
-                                    <label class="control-label" for="inputDefault">视频定向二级频道</label>
-                                    <input type="text" class="form-control" id="count_cost">
-                                    </div>
+                                        </div>
+
                                     </div>
 
                                     <div class="row">
                                     <div class="col-md-3 col-sm-offset-1">
-                                        <label for="select" class="control-label">广告模版名称</label>
-                                        <select class="form-control" id="exchange">
-                                            {#ad_tmps}
-                                                <option value="{id}">{name}</option>
-                                            {/ad_tmps}
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-3">
                                         <label for="select" class="control-label">优先级</label>
-                                        <select class="form-control" id="exchange">
+                                        <select class="form-control" name="Priority">
                                             <option value="0">0</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -151,17 +125,95 @@
                                     <div class="row">
                                     <div class="col-md-4 col-sm-offset-1">
                                     <label class="control-label" for="inputDefault">第三方监测地址</label>
-                                    <input type="text" class="form-control" id="count_cost">
+                                    <input type="text" class="form-control" ng-model="ad.Thirdparty_url" name="Thirdparty_url">
+                                    </div>
+                                    </div>  
+
+                                    <div class="row">
+                                    <div class="col-md-4 col-sm-offset-1">
+                                    <label class="control-label" for="inputDefault">落地页地址</label>
+                                    <input type="text" class="form-control" ng-model="ad.Landingpage_url" name="Landingpage_url">
                                     </div>
                                     </div>
 
                                     <div class="row">
                                     <div class="col-md-4 col-sm-offset-1">
-                                    <label class="control-label" for="inputDefault">LandingPage</label>
-                                    <input type="text" class="form-control" id="count_cost">
+                                    <label class="control-label" for="inputDefault">素材地址</label>
+                                    <input type="text" class="form-control" ng-model="ad.Creative_url" name="Creative_url">
                                     </div>
                                     </div>
 
+                                    <div class="row">
+                                    <div class="col-md-4 col-sm-offset-1">
+                                    <label class="control-label" for="inputDefault">展示监测地址</label>
+                                    <input type="text" class="form-control" ng-model="ad.Displaymonitor_url" name="Displaymonitor_url">
+                                    </div>
+                                    </div>
+
+                                    <div class="row">
+                                    <div class="col-md-4 col-sm-offset-1">
+                                    <label class="control-label" for="inputDefault">点击监测地址</label>
+                                    <input type="text" class="form-control" ng-model="ad.Clickmonitor_url" name="Clickmonitor_url">
+                                    </div>
+                                    </div>
+
+                                    <!--
+
+                                    <div class="row">
+                                    <div class="col-md-4 col-sm-offset-1">
+                                    <label class="control-label" for="inputDefault">tmp_name</label>
+                                    <input type="text" name="Tmp_name" ng-model="ad.Tmp_name" class="form-control">
+                                    </div>
+                                    </div>
+
+                                    <div class="row">
+                                    <div class="col-md-4 col-sm-offset-1">
+                                    <label class="control-label" for="inputDefault">attribute</label>
+                                    <input type="text" name="Attribute" ng-model="ad.Attribute" class="form-control" >
+                                    </div>
+                                    </div>
+
+                                    <div class="row">
+                                    <div class="col-md-4 col-sm-offset-1">
+                                    <label class="control-label" for="inputDefault">buyer_creative_id</label>
+                                    <input type="text" name="Buyer_creative_id" ng-model="ad.Buyer_creative_id" class="form-control" >
+                                    </div>
+                                    </div>
+
+                                    <div class="row">
+                                    <div class="col-md-4 col-sm-offset-1">
+                                    <label class="control-label" for="inputDefault">advertiser_name</label>
+                                    <input type="text" name="Advertiser_name" ng-model="ad.Advertiser_name" class="form-control" >
+                                    </div>
+                                    </div>
+                                    <input type="hidden" name="Html_snippet" ng-model="ad.Html_snippet" class="form-control">
+                                    -->
+
+                                    <div class="row">
+                                        
+                                    <div class="col-md-4 col-sm-offset-1">
+                                    <label class="control-label" for="inputDefault">Adexchange</label>
+                                    </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                    <div class="col-sm-offset-2">
+                                        <div ng-repeat="e in Exchange_all" class="checkbox col-md-5">
+                                            <label>{~lb}{~lb}e.label{~rb}{~rb}</label>
+                                            <input name="Exchange" type="checkbox" ng-checked="{~lb}{~lb}e.ischecked{~rb}{~rb}"
+                                              value="{~lb}{~lb}e.value{~rb}{~rb}">
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    
+
+                                    <input type="hidden" name="Duration" ng-model="ad.Duration" class="form-control" >
+                                    <input type="hidden" name="_id" ng-model="ad._id" ng-value="ad._id" class="form-control" >
+                                    
+
+                                    <!--
                                     <div class="row">
                                     <div class="col-md-6 col-sm-offset-1">
                                         <label for="select" class="control-label">广告敏感分类</label>
@@ -198,6 +250,7 @@
                                         </select>
                                     </div>
                                     </div>
+                                    -->
                                     <div class="row" >
                                         <h1></h1>
                                     </div>
@@ -212,6 +265,11 @@
                         </form>
                     </div>
                 </div>
-            {/ads}
+
+                <script src="/js/adform.js" type="text/javascript"></script>
+
+            {/list}
             </div>
+            <script src="/components/angular/angular.min.js" type="text/javascript"></script>
+
 {/manageform}

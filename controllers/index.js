@@ -2,6 +2,7 @@
 
 
 var IndexModel = require('../models/index');
+var auth = require('../lib/auth');
 
 
 module.exports = function (app) {

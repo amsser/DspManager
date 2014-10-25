@@ -12,7 +12,7 @@
             </div>
 
             <div class="col-md-2">
-                <input size="16" type="text" value="2014-05-02" class="form-control form_datetime">
+                <input size="16" type="text" value="2014-05-01" class="form-control form_datetime">
             </div>
 
             <div class="col-md-2">
@@ -60,28 +60,28 @@
 
 				</li>
 				<li class="">
-					<a href="#home" onclick="loadChartData('TransRatio')" data-toggle="tab">
+					<a href="#home" onclick="loadChartData('CPC')" data-toggle="tab">
 						<h6 class="text-muted">CPC</h6>
 						<h5>{sum.CPC}</h5>
 					</a>
 
 				</li>
 				<li class="">
-					<a href="#home" onclick="loadChartData('TransRatio')" data-toggle="tab">
+					<a href="#home" onclick="loadChartData('CPM')" data-toggle="tab">
 						<h6 class="text-muted">CPM</h6>
 						<h5>{sum.CPM}</h5>
 					</a>
 
 				</li>
 				<li class="">
-					<a href="#home" onclick="loadChartData('TransRatio')" data-toggle="tab">
+					<a href="#home" onclick="loadChartData('CPA')" data-toggle="tab">
 						<h6 class="text-muted">CPA</h6>
 						<h5>{sum.CPA}</h5>
 					</a>
 
 				</li>
 				<li class="">
-					<a href="#home" onclick="loadChartData('TransRatio')" data-toggle="tab">
+					<a href="#home" onclick="loadChartData('Cost')" data-toggle="tab">
 						<h6 class="text-muted">总花费</h6>
 						<h5>{sum.Cost}</h5>
 					</a>
@@ -179,7 +179,7 @@
 			        },
 			        yAxis: {
 			            title: {
-			                text: '展示数'
+			                text: ''
 			            }
 			        },
 			        legend : {
