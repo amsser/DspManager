@@ -16,6 +16,8 @@
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/iCheck/skins/flat/blue.css" />
     <link rel="stylesheet" type="text/css" href="/css/datepicker.css" />
+    <script src="/components/react/react.min.js" type="text/javascript"></script>
+    <script src="/components/react/JSXTransformer.js" type="text/javascript"></script>
 
 </head>
 <body>

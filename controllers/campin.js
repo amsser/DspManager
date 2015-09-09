@@ -4,44 +4,42 @@
 var CampinModel = require('../models/campin');
 var OrderModel = require('../models/order');
 var auth = require('../lib/auth');
+var authUtil = require('./authorityUtil');
 var ObjectID = require('mongodb').ObjectID;
 var db = require('../lib/db').db;
+var co = require('co');
 
 
 
 module.exports = function(app) {
 
-    function loadUser(req, res, next) {
+    app.all('/campin', auth.isAuthenticated(), function(req, res) {
 
-        console.log(req.path.split('/')[1]);
-        req.user2 = "xxx";
+        var default_url = '/campin/list';
 
-        next();
-    }
+        if(req.user.role === 'admin' || req.user.role === 'dspadmin'){
+            default_url = '/user/list';
+        }
 
-
-    app.all('/campin', auth.isAuthenticated(), loadUser ,function(req, res) {
-
-        console.log("/campain");
-        console.log(req.user2);
-        req.campin = "xx---";
-
-        res.redirect("/campin/list");
+        res.redirect(default_url);
 
     });
 
     app.all('/campin/list', auth.isAuthenticated(), function(req, res) {
 
-        var result = {};
+        var cd = {};
 
-        console.log(req.user._id);
+        cd = authUtil.genConditionByRole(req.user, cd);
+
+        var result = {};
 
         result["page"] = "campin";
         result["todaypay"] = 0;
         result["balance"] = 400;
-        //
+        
+        console.log(cd);
 
-        CampinModel.find({uid:req.user._id}, function(err, dbcampins) {
+        CampinModel.find(cd, function(err, dbcampins) {
             result["campins"] = dbcampins;
             result["list"] = true;
 
@@ -57,41 +55,47 @@ module.exports = function(app) {
         result["page"] = "campin";
         result["todaypay"] = 0;
         result["balance"] = 400;
-        
-        CampinModel.find({uid:req.user._id}, function(err, dbcampins) {
-            result["campins"] = dbcampins;
+
+        co(function * () {
+
+            result = yield authUtil.getAdvertisers(result, req.user);
+            result.advertisers = JSON.stringify(result.advertisers);
 
             CampinModel.findById(id, function(err, campin) {
+
                 if (err) console.log(err);
+
                 result["campin"] = campin;
 
-                OrderModel.find({
-                    uid:req.user._id
-                }, function(err, userorders) {
-                    result["user_orders"] = userorders;
-                    res.render('campin', result);
-                });
+                console.log(result);
 
+                res.render('campin', result);
             });
 
-        });
-
-
+        })();
 
     });
 
+
     app.all('/campin/create', auth.isAuthenticated(), function(req, res) {
+
+
         var result = {};
 
         result["page"] = "campin";
         result["todaypay"] = 0;
         result["balance"] = 400;
-        
-        
-        CampinModel.find({uid:req.user._id}, function(err, dbcampins) {
-            result["campins"] = dbcampins;
+
+        co(function * () {
+
+            result = yield authUtil.getAdvertisers(result, req.user);
+            result.advertisers = JSON.stringify(result.advertisers);
+
             res.render('campin', result);
-        });
+
+
+        })();
+
 
     });
 
@@ -100,16 +104,12 @@ module.exports = function(app) {
         var cam = {};
         cam["name"] = req.body.campin_name;
         cam["_id"] = req.body.campin_id;
+        cam["advertiser"] = req.body.advertiser;
 
-        if (cam._id && cam._id != '') {
+        cam = authUtil.genID(cam);
+        cam = authUtil.setBelongs(cam, req.user);
 
-            cam._id = new ObjectID(cam._id);
-
-        } else {
-            delete cam._id;
-        }
-
-        cam.uid = req.user._id;
+        console.log(cam);
 
         db().collection('campins').save(cam, function(err, result) {
 

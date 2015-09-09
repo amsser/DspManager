@@ -1,22 +1,16 @@
 'use strict';
 
-var redis = require("redis"),
-    client = redis.createClient("6379", "124.232.133.211", {
-        detect_buffers: true
-    });
-
-
-var AdModel = require('../models/user');
 var ObjectID = require('mongodb').ObjectID;
+var mongo = require('../lib/db');
 var db = require('../lib/db').db;
-var CampinModel = require('../models/campin');
-var OrderModel = require('../models/order');
+var _ = require('underscore');
+var co = require('co');
 var auth = require('../lib/auth');
-var q = require('q');
-var async = require('async');
+var bcrypt = require('bcrypt'),
+    nconf = require('nconf'),
+    DIFFICULTY = (nconf.get('auth') && nconf.get('bcrypt').difficulty) || 8;
 
 module.exports = function(app) {
-    var model = new AdModel();
 
     app.get('/user', auth.isAuthenticated(), function(req, res) {
 
@@ -26,193 +20,141 @@ module.exports = function(app) {
 
     app.get('/user/list', auth.isAuthenticated(), function(req, res) {
 
-        var condition = {};
+        var uid = req.user.login;
 
-        condition.Order_id = req.param('o_id');
-        condition.uid = req.user._id;
+        console.log(uid);
 
-        var result = {};
+        var rs = {};
 
-        result["page"] = "user";
-        result["todaypay"] = 0;
-        result["balance"] = 400;
+        var cd = {};
 
-
-        q.all([
-
-            q.ninvoke(CampinModel, 'find', {uid:req.user._id}),
-            q.ninvoke(AdModel, 'find', condition),
-            q.ninvoke(OrderModel, 'find', {
-                _id: condition.Order_id
-            })
-
-        ]).then(function(r) {
-
-            result["campins"] = r[0];
-            result["list"] = true;
-
-            result["users"] = r[1];
-            result.Order_id = condition.Order_id;
-
-            result.order = r[2][0];
-
-            res.render('user', result);
-
-        });
-
-    });
-
-    app.all('/user/get', auth.isAuthenticated(), function(req, res) {
-
-        var o_id = req.param('o_id');
-
-        var result = {};
-
-        result["page"] = "user";
-        result["todaypay"] = 0;
-        result["balance"] = 400;
-
-
-        result.Order_id = o_id;
-
-        if (req.param('id')) {
-            result['id'] = req.param('id');
+        if (req.user.role === 'dspadmin') {
+            cd.dspadmin = uid;
+        }else if (req.user.role === 'admin') {
+            cd = {};
         }
 
-        console.log(result);
+        co(function * () {
 
-        res.render('user', result);
+            var result = yield mongo.query('users', cd, {
+                savetime: -1
+            });
 
-    });
+            rs.data = result;
 
+            console.log(rs);
 
+            res.render('user_list', rs);
 
-    app.all('/user/getjson', auth.isAuthenticated(), function(req, res) {
-
-        var id = req.param('id');
-
-        AdModel.findById(id, function(err, user) {
-
-            var result = {};
-
-            result["user"] = user;
-
-            res.json(result);
-
-        });
+        })();
 
     });
 
 
+    app.get('/user/create', auth.isAuthenticated(), function(req, res) {
+
+        co(function * () {
+
+            var edit_uid = req.param("login");
+
+            var rs = {};
+
+            //获得analystto array 。 也就是创建的用户可以属于那些用户
+            //首先是创建者本身，然后是属于创建者的，GroupAdmin 角色和 Analyst 角色的用户。
+            var analysts = [req.user];
+
+            var cd = {};
+
+            if (req.user.role === 'dspadmin') {
+                cd.dspadmin = req.user.login;
+            }else if (req.user.role === 'admin') {
+                cd = {};
+            }
+
+            var result = yield mongo.query('users', cd, {
+                savetime: -1
+            });
+
+            var group_result = _.groupBy(result, function(r) {
+                return r.role;
+            });
+
+            console.log(group_result);
+
+            rs.analysts = JSON.stringify(group_result.analyst);
+            rs.dspadmins = JSON.stringify(group_result.dspadmin);
+
+            console.log(rs);
+
+            if (edit_uid) {
+
+                var edit_user_result = yield mongo.query('users', {
+                    login: edit_uid
+                });
+
+                rs.edit_user = edit_user_result[0];
+                console.log(rs);
+                res.render('user_create', rs);
+
+            } else {
+
+                res.render('user_create', rs);
+
+            }
+
+
+        })();
+
+    });
 
     app.all('/user/save', auth.isAuthenticated(), function(req, res) {
 
-        var user = req.body;
+        co(function * () {
 
-        console.log(user);
+            var user = req.body;
 
-        if (user._id && user._id != '') {
-            user._id = new ObjectID(user._id);
-        } else {
-            delete user._id;
-        }
+            user.dspadmin = req.user.login;
 
-        if (user.Exchange && user.Exchange != '') {
-            user.Exchange = user.Exchange.split(",");
-        }
+            console.log(user);
 
-        user.uid = req.user._id;
+            if (user._id && user._id !== '') {
 
-        db().collection('users').save(user, function(err, result) {
+                user._id = new ObjectID(user._id);
 
-            var cmd = combine_cmds(user);
+            } else {
+                user._id = new ObjectID();
+            }
 
-            save_redis(cmd, function() {
+            if (user.password !== '') {
+                var hashedPwd = bcrypt.hashSync(user.password, DIFFICULTY);
+                user.password = hashedPwd;
+            } else {
+                delete user.password;
+            }
 
-                res.redirect("/user/list?o_id=" + user.Order_id);
+            var result = yield mongo.save('users', user);
 
-            });
+            console.log(result);
 
-        });
+            res.redirect("/user/list");
 
-
-    });
-
-    app.all('/user/find', auth.isAuthenticated(), function(req, res) {
-
-        var result = {};
-        var id = req.param('id');
-
-        result["page"] = "user";
-        result["todaypay"] = 0;
-        result["balance"] = 400;
-
-
-        CampinModel.find({uid:req.user._id}, function(err, dbcampins) {
-            result["campins"] = dbcampins;
-            result["user_tmps"] = [{
-                "name": "京东母婴",
-                "id": 1
-            }, {
-                "name": "京东3c",
-                "id": 2
-            }];
-
-            AdModel.findById(id, function(err, user) {
-                result["users"] = [user];
-                res.render('user', result);
-            });
-
-        });
+        })();
 
     });
 
-    app.all('/user/delete', auth.isAuthenticated(), function(req, res) {
-        var id = req.param('id');
-        var o_id = req.param('o_id');
+    app.get('/user/remove', auth.isAuthenticated(), function(req, res) {
 
-        async.auto({
-            del_redis: function(callback) {
+        var id = req.param('login');
 
-                console.log('delete from redis');
+        co(function * () {
 
-                var usercmd = [];
+            var result = yield mongo.remove('users', {
+                login: id
+            });
 
-                usercmd.push({
-                    "oper_type": "6",
-                    "fmt_ver": "1",
-                    "data": [id]
-                });
+            res.redirect("/user/list");
 
-                console.log(JSON.stringify(usercmd));
-
-                save_redis(usercmd, function() {
-
-                    callback(null);
-
-                });
-
-            },
-            del_mongo: ['del_redis',
-                function(callback, results) {
-
-                    console.log('del from mongo');
-
-                    AdModel.remove({
-                        _id: id
-                    }, function(err) {
-                        if (err) console.log(err);
-                        callback(null);
-                    });
-
-                }
-            ]
-        }, function(err, results) {
-
-            console.log('err = ', err);
-            res.redirect("/user/list?o_id=" + o_id);
-
-        });
+        })();
 
     });
 

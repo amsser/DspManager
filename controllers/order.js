@@ -13,6 +13,7 @@ var db = require('../lib/db').db;
 var _ = require('underscore');
 var q = require('q');
 var async = require('async');
+var authUtil = require('./authorityUtil');
 
 module.exports = function(app) {
 
@@ -27,7 +28,6 @@ module.exports = function(app) {
         var condition = {};
 
         condition.Campin_id = req.param('c_id');
-        condition.uid = req.user._id
 
         var result = {};
 
@@ -37,7 +37,9 @@ module.exports = function(app) {
 
 
         q.all([
-            q.ninvoke(CampinModel, 'find', {uid:req.user._id}),
+            q.ninvoke(CampinModel, 'find', {
+                uid: req.user._id
+            }),
             q.ninvoke(OrderModel, 'find', condition),
             q.ninvoke(CampinModel, 'find', {
                 _id: condition.Campin_id
@@ -52,6 +54,7 @@ module.exports = function(app) {
 
             for (var o in result.orders) {
 
+                result.orders[o] = transOrderMoney('2c', result.orders[o]);
                 result.orders[o].Campin_name = result[2][0].name;
 
             }
@@ -67,7 +70,7 @@ module.exports = function(app) {
     app.get('/order/listjson', auth.isAuthenticated(), function(req, res) {
 
         OrderModel.find({
-            uid:req.user._id
+            uid: req.user._id
             //"advertiser_id": 1
         }, function(err, ors) {
             res.json(ors);
@@ -85,22 +88,31 @@ module.exports = function(app) {
         result["balance"] = 400;
 
 
-        CampinModel.find({uid:req.user._id}, function(err, dbcampins) {
+        CampinModel.find({
+            uid: req.user._id
+        }, function(err, dbcampins) {
             result["campins"] = dbcampins;
 
             OrderModel.findById(id, function(err, order) {
 
+                console.log(order);
+
                 result["L_time"] = trans_ltime(order.L_time);
                 result["Region_in"] = JSON.stringify(order.Region_in);
                 result["Url_price"] = JSON.stringify(order.Url_price);
+                result["Url_price"] = transMoneyList('2c', result["Url_price"]);
                 result["Slotid_price"] = JSON.stringify(order.Slotid_price);
+                result["Slotid_price"] = transMoneyList('2c', result["Slotid_price"]);
+
+                order = transOrderMoney('2c', order);
 
                 var p = {
+
                     Url_in: order.Url_in,
                     Url_price: order.Url_price,
+                    Slotid_price: order.Slotid_price,
                     Browser_in: order.Browser_in,
                     Adslotid_in: order.Adslotid_in,
-                    Slotid_price: order.Slotid_price,
                     Slot_visibility: order.Slot_visibility,
                     Tags: order.Tags,
                     Operation_in: order.Operation_in
@@ -132,7 +144,9 @@ module.exports = function(app) {
         result["todaypay"] = 0;
         result["balance"] = 400;
 
-        CampinModel.find({uid:req.user._id}, function(err, dbcampins) {
+        CampinModel.find({
+            uid: req.user._id
+        }, function(err, dbcampins) {
             result["campins"] = dbcampins;
 
             result["L_time"] = trans_ltime('All');
@@ -151,15 +165,9 @@ module.exports = function(app) {
 
         console.log(JSON.stringify(ord, undefined, 2));
 
-        if (ord._id && ord._id != '') {
+        ord = authUtil.genID(ord);
+        ord = authUtil.setBelongs(ord, req.user);
 
-            ord._id = new ObjectID(ord._id);
-
-        } else {
-            delete ord._id;
-        }
-
-        console.log(ord["Region_in"]);
         ord.Region_in = trans_string_array(ord["Region_in"]);
         //console.log(ord["Url_in"]);
         ord.Url_in = JSON.parse(ord["Url_in"]);
@@ -171,9 +179,10 @@ module.exports = function(app) {
 
         ord.Url_price = trans_string_object_array(ord["Url_price"]);
         ord.Slotid_price = trans_string_object_array(ord["Slotid_price"]);
+        ord = transOrderMoney('2m',ord);
+
         ord.Tags = _.pluck(JSON.parse(ord['Tags']), 'Tag_id');
 
-        ord.uid = req.user._id;
 
         console.log(JSON.stringify(ord, null, 2));
 
@@ -182,7 +191,7 @@ module.exports = function(app) {
 
             console.log(result);
 
-            save_order_to_redis(ord,function(){
+            save_order_to_redis(ord, function() {
 
                 res.redirect("/order/list?c_id=" + ord.Campin_id);
 
@@ -192,6 +201,85 @@ module.exports = function(app) {
 
 
     });
+
+    function trans2Mmoney(item) {
+
+        var t = parseFloat(item);
+
+        if (t) {
+            item = parseInt(t * 1000) + '';
+        } else {
+            item = '';
+        }
+
+        return item;
+    }
+
+    function trans2Cmoney(item) {
+
+        var t = parseInt(item);
+
+        if (t) {
+            item = t / 1000.0 + '';
+        } else {
+            item = '';
+        }
+
+        return item;
+    }
+
+    function trans2Cor2M(mod, item) {
+
+        if (mod === '2c') {
+            item = trans2Cmoney(item);
+        } else {
+            item = trans2Mmoney(item);
+        }
+
+        return item;
+
+    }
+
+    function transMoney(mod, item, para) {
+
+        if (para) {
+            item[para] = trans2Cor2M(mod, item[para]);
+        } else {
+            item = trans2Cor2M(mod, item);
+        }
+
+        return item;
+
+    }
+
+    function transMoneyList(mod, originMoney, para) {
+
+        var mMoney = [];
+
+        for (var i = 0; i < originMoney.length; i++) {
+
+            var item = originMoney[i];
+
+            item = transMoney(mod, item, para);
+
+            mMoney.push(item);
+
+        }
+
+        return mMoney;
+
+    }
+
+    function transOrderMoney(mod, order) {
+
+        order.Count_cost = transMoney(mod, order.Count_cost);
+        order.Max_price = transMoneyList(mod, order.Max_price);
+        order.Url_price = transMoneyList(mod, order.Url_price, 'Price');
+        order.Slotid_price = transMoneyList(mod, order.Slotid_price, 'Price');
+
+        return order;
+
+    }
 
     function trans_ltime(r) {
 
@@ -290,7 +378,7 @@ module.exports = function(app) {
 
     }
 
-    function save_order_to_redis(rs,callback) {
+    function save_order_to_redis(rs, callback) {
 
         var cmd_rs = rs;
 
@@ -324,13 +412,13 @@ module.exports = function(app) {
 
         console.log(JSON.stringify(adcmd));
 
-        save_to_redis(adcmd,callback);
+        save_to_redis(adcmd, callback);
 
 
 
     }
 
-    function save_to_redis(adcmd,callback){
+    function save_to_redis(adcmd, callback) {
 
         var keys = ["dcc-124.232.133.211", "dcc-124.232.133.212", "dcc-124.232.133.213", "dcc-124.232.133.214", "dcc-124.232.133.215"];
 
@@ -373,7 +461,9 @@ module.exports = function(app) {
         result["todaypay"] = 0;
         result["balance"] = 400;
 
-        CampinModel.find({uid:req.user._id}, function(err, dbcampins) {
+        CampinModel.find({
+            uid: req.user._id
+        }, function(err, dbcampins) {
             result["campins"] = dbcampins;
             result["list"] = true;
 
@@ -414,12 +504,12 @@ module.exports = function(app) {
                 adcmd.push({
                     "oper_type": "5",
                     "fmt_ver": "1",
-                    "data": [ id ]
+                    "data": [id]
                 });
 
                 console.log(JSON.stringify(adcmd));
 
-                save_to_redis(adcmd,function(){
+                save_to_redis(adcmd, function() {
 
                     callback(null);
 
@@ -432,14 +522,14 @@ module.exports = function(app) {
                     console.log('del from mongo');
 
                     OrderModel.remove({
-                            _id: id
-                        }, function(err) {
+                        _id: id
+                    }, function(err) {
 
-                            if (err) console.log(err);
+                        if (err) console.log(err);
 
-                            callback(null);
+                        callback(null);
 
-                        });
+                    });
 
                 }
             ]

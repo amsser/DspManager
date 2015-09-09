@@ -47,53 +47,18 @@
                         <form class="form-horizontal" action="/campin/save" method="post">
                             <fieldset>
                                 <div class="row" >
-                                    <div class="col-md-4">
+                                    <div class="col-md-6 col-sm-offset-1">
                                     <label class="control-label" for="inputDefault">活动名称</label>
                                     <input type="text" class="form-control"  name="campin_name" {?campin}value="{campin.name}"{/campin}>
                                     <input type="hidden" class="form-control"  name="campin_id" {?campin}value="{campin._id}"{/campin}>
                                     </div>
                                 </div>
-                                <!--
-                                <div class="row" >
-                                    <div class="col-md-6">
-                                        <label class="control-label">预算分配方式</label>
-                                        <div class="col-md-3">
-                                        <div class="radio">
-                                            <label>
-                                            <input type="radio" name="campin_ptype" id="optionsRadios1" value="1" {@eq key=campin.orderpay_type value="1"}checked=""{/eq}>
-                                            均分
-                                            </label>
-                                        </div>
-                                        <div class="radio">
-                                            <label>
-                                            <input type="radio" name="campin_ptype" id="optionsRadios2" value="2" {@eq key=campin.orderpay_type value="2"}checked=""{/eq}>
-                                            订单
-                                            </label>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="row" >
-                                    <div class="col-md-4 col-sm-offset-1" >
-                                        <div class="row">
-                                        <label for="select" class="control-label">订单列表</label>
-                                        </div>
-                                        <div class="row">
-                                        <select multiple="" name="campin_orders" class="form-control" id="select">
-                                    
-                                        {#user_orders}
-                                        <option value={_id}>{_id}</option>
-                                        {/user_orders}
-                                        
-                                        </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <h1></h1>
-                                </div>
-                                -->
+                                  <!-- react begin -->
+                                  <div class="row" SelectedOpt='{campin.advertiser}' OptList='{advertisers}' id="advertiserSelect" ></div>
+                                  <script src="/js/react/Select.js" type="text/jsx"></script>
+                                  <script src="/js/react/advertiserSelect.js" type="text/jsx"></script>
+                                  <!-- react end -->
+
                                 <div class="row" >
                                     <div class="col-md-9">
                                     </div>

@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
                                     </div>
-
+                                    
                                     <div class="row">
                                     <div class="col-md-4 col-sm-offset-1">
                                     <label class="control-label" for="inputDefault">广告尺寸</label>
@@ -109,18 +109,9 @@
 
                                     </div>
 
-                                    <div class="row">
-                                    <div class="col-md-3 col-sm-offset-1">
-                                        <label for="select" class="control-label">优先级</label>
-                                        <select class="form-control" name="Priority">
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                        </select>
-                                    </div>
-                                    </div>
+                                    <!-- Use react -->
+                                    <div class="row" SelectedOpt='{ad.Priority}' id='priority_select'></div>
+                                    <!-- Use react -->
 
                                     <div class="row">
                                     <div class="col-md-4 col-sm-offset-1">
@@ -192,20 +183,16 @@
                                     <div class="row">
                                         
                                     <div class="col-md-4 col-sm-offset-1">
-                                    <label class="control-label" for="inputDefault">Adexchange</label>
+                                    <label class="control-label" for="inputDefault">Ad Exchange</label>
                                     </div>
 
                                     </div>
 
-                                    <div class="row">
-                                    <div class="col-sm-offset-2">
-                                        <div ng-repeat="e in Exchange_all" class="checkbox col-md-5">
-                                            <label>{~lb}{~lb}e.label{~rb}{~rb}</label>
-                                            <input name="Exchange" type="checkbox" ng-checked="{~lb}{~lb}e.ischecked{~rb}{~rb}"
-                                              value="{~lb}{~lb}e.value{~rb}{~rb}">
-                                        </div>
-                                    </div>
-                                    </div>
+                                    <!-- Use react -->
+                                    <div class="row" exchanges_array='{ad.Exchange}' id="exchanges_checkbox"></div>
+                                    <script src="/js/react/Select.js" type="text/jsx"></script>
+                                    <script src="/js/react/ad.js" type="text/jsx"></script>
+                                    <!-- Use react -->
 
                                     
 

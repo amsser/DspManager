@@ -14,6 +14,7 @@ var OrderModel = require('../models/order');
 var auth = require('../lib/auth');
 var q = require('q');
 var async = require('async');
+var authUtil = require('./authorityUtil');
 
 module.exports = function(app) {
     var model = new AdModel();
@@ -29,7 +30,6 @@ module.exports = function(app) {
         var condition = {};
 
         condition.Order_id = req.param('o_id');
-        condition.uid = req.user._id;
 
         var result = {};
 
@@ -40,7 +40,9 @@ module.exports = function(app) {
 
         q.all([
 
-            q.ninvoke(CampinModel, 'find', {uid:req.user._id}),
+            q.ninvoke(CampinModel, 'find', {
+                uid: req.user._id
+            }),
             q.ninvoke(AdModel, 'find', condition),
             q.ninvoke(OrderModel, 'find', {
                 _id: condition.Order_id
@@ -77,11 +79,24 @@ module.exports = function(app) {
 
         if (req.param('id')) {
             result['id'] = req.param('id');
+
+            AdModel.findById(req.param('id'), function(err, ad) {
+
+                result["ad"] = ad;
+
+                console.log(result);
+
+                res.render('ad', result);
+
+            });
+
+
+        }else{
+            res.render('ad', result);
         }
 
-        console.log(result);
+        
 
-        res.render('ad', result);
 
     });
 
@@ -111,21 +126,18 @@ module.exports = function(app) {
 
         console.log(ad);
 
-        if (ad._id && ad._id != '') {
-            ad._id = new ObjectID(ad._id);
-        } else {
-            delete ad._id;
-        }
+        ad = authUtil.genID(ad);
+        ad = authUtil.setBelongs(ad, req.user);
 
-        if (ad.Exchange && ad.Exchange != '') {
-            ad.Exchange = ad.Exchange.split(",");
-        }
-
-        ad.uid = req.user._id;
+        // if (ad.Exchange && ad.Exchange != '') {
+        //     ad.Exchange = ad.Exchange.split(",");
+        // }
 
         db().collection('ads').save(ad, function(err, result) {
 
             var cmd = combine_cmds(ad);
+
+            console.log(ad);
 
             save_redis(cmd, function() {
 
@@ -176,7 +188,7 @@ module.exports = function(app) {
 
     function combine_cmds(rs) {
 
-        rs["ad_id"] = rs["_id"];
+        rs["Ad_id"] = rs["_id"];
 
         var adcmd = [];
 
@@ -208,7 +220,9 @@ module.exports = function(app) {
         result["balance"] = 400;
 
 
-        CampinModel.find({uid:req.user._id}, function(err, dbcampins) {
+        CampinModel.find({
+            uid: req.user._id
+        }, function(err, dbcampins) {
             result["campins"] = dbcampins;
             result["ad_tmps"] = [{
                 "name": "京东母婴",

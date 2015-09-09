@@ -38,20 +38,12 @@ app.configure = function configure(nconf, next) {
     var u1 = new User({
         name: 'advertiser',
         login: 'admin',
-        password: 'adm1n',
+        password: 'Hell0Dsp',
         role: 'admin'
     });
 
-    //Add two users to the system.
-    var u2 = new User({
-        name: 'advertiser',
-        login: 'dsp2admin',
-        password: 'adm2n',
-        role: 'groupadmin'
-    });
     //Ignore errors. In this case, the errors will be for duplicate keys as we run this app more than once.
     u1.save();
-    u2.save();
 
     // Async method run on startup.
     next(null);

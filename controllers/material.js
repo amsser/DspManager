@@ -6,6 +6,7 @@ var ObjectID = require('mongodb').ObjectID;
 var moment = require('moment');
 var path = require('path');
 var auth = require('../lib/auth');
+var mv = require('mv');
 //var images = require("images");
 
 
@@ -21,15 +22,24 @@ module.exports = function(app) {
 	app.get('/material/list', auth.isAuthenticated(), function(req, res) {
 
 
-		db().collection('material').find({uid:req.user._id,rm : {$ne : true}}).sort({savetime : -1}).toArray(function(err, result) {
+		db().collection('material').find({
+			uid: req.user._id,
+			rm: {
+				$ne: true
+			}
+		}).sort({
+			savetime: -1
+		}).toArray(function(err, result) {
 
 			console.log(result);
 
-			res.render('material_list',{data:result});
+			res.render('material_list', {
+				data: result
+			});
 
 		});
 
-		
+
 
 	});
 
@@ -61,10 +71,11 @@ module.exports = function(app) {
 		material.savetime = moment().format('YYYY-MM-DD HH:mm:ss');
 
 		material.uid = req.user._id;
-		
 
-		// 移动文件
-		fs.rename(tmp_path, material.target_path, function(err) {
+		mv(tmp_path, material.target_path, {
+			mkdirp: true
+		}, function(err) {
+
 			if (err) throw err;
 
 			db().collection('material').save(material, function(err, result) {
@@ -82,7 +93,6 @@ module.exports = function(app) {
 		});
 
 
-
 	});
 
 	app.all('/material/remove', auth.isAuthenticated(), function(req, res) {
@@ -91,7 +101,13 @@ module.exports = function(app) {
 
 		console.log(id);
 
-		db().collection('material').update({_id: new ObjectID(id)},{$set: { rm : true }},function(err, result) {
+		db().collection('material').update({
+			_id: new ObjectID(id)
+		}, {
+			$set: {
+				rm: true
+			}
+		}, function(err, result) {
 
 			console.log(result);
 
@@ -108,19 +124,21 @@ module.exports = function(app) {
 
 		console.log(id);
 
-		db().collection('material').findOne({_id: new ObjectID(id)},function(err, result) {
+		db().collection('material').findOne({
+			_id: new ObjectID(id)
+		}, function(err, result) {
 
 			console.log(result);
 
-			res.render('material_create',result);
+			res.render('material_create', result);
 
 		});
 
 	});
 
 
-	function getExtName(file_name){
-		var result =/\.[^\.]+/.exec(file_name);
+	function getExtName(file_name) {
+		var result = /\.[^\.]+/.exec(file_name);
 		return result;
 	}
 

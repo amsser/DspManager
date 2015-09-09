@@ -22,7 +22,7 @@ module.exports = function (app) {
         var groupby = {};
 
         if(req.query.activity){
-             groupby['ActivityName'] = "$ActivityName";
+            groupby['ActivityName'] = "$ActivityName";
         }
 
         if(req.query.order){
